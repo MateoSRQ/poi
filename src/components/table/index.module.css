@@ -1,0 +1,41 @@
+.component {
+    width: calc(100%);
+    height: calc(100%);
+}
+
+.component * {
+    /*font-family: 'Noto Sans', sans-serif;*/
+    font-size: 0.80rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+}
+
+.component :global(.ant-table-row-level-0) td {
+    font-size: .95rem;
+    background-color: #023581;
+    color: #ffffff;
+    border: 2px solid white
+}
+
+.component :global(.ant-table-row-level-1) td {
+    font-size: .9rem;
+    background-color: #86adf6;
+    color: #000000;
+    border: 2px solid white
+}
+
+.component :global(.ant-table-row-level-2) td {
+    font-size: .85rem;
+    background-color: #e1e1e1;
+    color: #044f9a;
+    border: 2px solid white
+}
+
+
+
+
+.component :global(.ant-table-row-level-0) th {
+    font-size: 0.90rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 900;
+}
