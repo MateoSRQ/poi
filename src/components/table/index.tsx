@@ -5,148 +5,21 @@ import { Table } from 'antd';
 import type { ColumnsType } from 'antd/lib/table';
 import React from 'react';
 
-function Component() {
-    // const columns = [
-    //     { id: 'ID', dataIndex: 'id', key: 'id' },
-    //     { title: 'Índice', dataIndex: 'indice', key: 'indice' },
-    //     { title: 'Nombre', dataIndex: 'nombre', key: 'nombre' },
-    //     { title: 'Responsable', dataIndex: 'responsable', key: 'responsable' },
-    //     { title: 'Unidad de Medida', dataIndex: 'um', key: 'um' },
-    //     { title: 'Meta Física', dataIndex: 'meta', key: 'meta' },
-    //     {
-    //       title: '2022',
-    //       children: [
-    //           {
-    //               title: 'T1',
-    //               children: [
-    //                   { title: 'E', dataIndex: 'enero2022', key: 'enero2022'},
-    //                   { title: 'F', dataIndex: 'febrero2022', key: 'febrero2022'},
-    //                   { title: 'M', dataIndex: 'marzo2022', key: 'marzo2022'},
-    //               ]
-    //           },
-    //           {
-    //               title: 'T2',
-    //               children: [
-    //                   { title: 'A', dataIndex: 'abril2022', key: 'abril2022'},
-    //                   { title: 'M', dataIndex: 'mayo2022', key: 'mayo2022'},
-    //                   { title: 'J', dataIndex: 'junio2022', key: 'junio2022'},
-    //               ]
-    //           },
-    //           {
-    //               title: 'T3',
-    //               children: [
-    //                   { title: 'J', dataIndex: 'julio2022', key: 'julio2022'},
-    //                   { title: 'A', dataIndex: 'agosto2022', key: 'agosto2022'},
-    //                   { title: 'S', dataIndex: 'setiembre2022', key: 'setiembre2022'},
-    //               ]
-    //           },
-    //           {
-    //               title: 'T4',
-    //               children: [
-    //                   { title: 'O', dataIndex: 'octubre2022', key: 'octubre2022'},
-    //                   { title: 'N', dataIndex: 'noviembre2022', key: 'noviembre2022'},
-    //                   { title: 'D', dataIndex: 'diciembre2022', key: 'diciembre2022'},
-    //               ]
-    //           },
-    //       ]
-    //     },
-    //     {
-    //         title: '2023',
-    //         children: [
-    //             {
-    //                 title: 'T1',
-    //                 children: [
-    //                     { title: 'E', dataIndex: 'enero2023', key: 'enero2023'},
-    //                     { title: 'F', dataIndex: 'febrero2023', key: 'febrero2023'},
-    //                     { title: 'M', dataIndex: 'marzo2023', key: 'marzo2023'},
-    //                 ]
-    //             },
-    //             {
-    //                 title: 'T2',
-    //                 children: [
-    //                     { title: 'A', dataIndex: 'abril2023', key: 'abril2023'},
-    //                     { title: 'M', dataIndex: 'mayo2023', key: 'mayo2023'},
-    //                     { title: 'J', dataIndex: 'junio2023', key: 'junio2023'},
-    //                 ]
-    //             },
-    //             {
-    //                 title: 'T3',
-    //                 children: [
-    //                     { title: 'J', dataIndex: 'julio2023', key: 'julio2023'},
-    //                     { title: 'A', dataIndex: 'agosto2023', key: 'agosto2023'},
-    //                     { title: 'S', dataIndex: 'setiembre2023', key: 'setiembre2023'},
-    //                 ]
-    //             },
-    //             {
-    //                 title: 'T4',
-    //                 children: [
-    //                     { title: 'O', dataIndex: 'octubre2023', key: 'octubre2023'},
-    //                     { title: 'N', dataIndex: 'noviembre2023', key: 'noviembre2023'},
-    //                     { title: 'D', dataIndex: 'diciembre2023', key: 'diciembre2023'},
-    //                 ]
-    //             },
-    //         ]
-    //     },
-    //     {
-    //         title: '2024',
-    //         children: [
-    //             {
-    //                 title: 'T1',
-    //                 children: [
-    //                     { title: 'E', dataIndex: 'enero2024', key: 'enero2024'},
-    //                     { title: 'F', dataIndex: 'febrero2024', key: 'febrero2024'},
-    //                     { title: 'M', dataIndex: 'marzo2024', key: 'marzo2024'},
-    //                 ]
-    //             },
-    //             {
-    //                 title: 'T2',
-    //                 children: [
-    //                     { title: 'A', dataIndex: 'abril2024', key: 'abril2024'},
-    //                     { title: 'M', dataIndex: 'mayo2024', key: 'mayo2024'},
-    //                     { title: 'J', dataIndex: 'junio2024', key: 'junio2024'},
-    //                 ]
-    //             },
-    //             {
-    //                 title: 'T3',
-    //                 children: [
-    //                     { title: 'J', dataIndex: 'julio2024', key: 'julio2024'},
-    //                     { title: 'A', dataIndex: 'agosto2024', key: 'agosto2024'},
-    //                     { title: 'S', dataIndex: 'setiembre2024', key: 'setiembre2024'},
-    //                 ]
-    //             },
-    //             {
-    //                 title: 'T4',
-    //                 children: [
-    //                     { title: 'O', dataIndex: 'octubre2024', key: 'octubre2024'},
-    //                     { title: 'N', dataIndex: 'noviembre2024', key: 'noviembre2024'},
-    //                     { title: 'D', dataIndex: 'diciembre2024', key: 'diciembre2024'},
-    //                 ]
-    //             },
-    //         ]
-    //     },
-    //     {
-    //         title: 'Presupuesto',
-    //         children: [
-    //             {title: '2022', dataIndex: 'ppto2022', key: 'ppto2022'},
-    //             {title: '2023', dataIndex: 'ppto2023', key: 'ppto2023'},
-    //             {title: '2024', dataIndex: 'ppto2024', key: 'ppto2024'}
-    //         ]
-    //     }
-    // ];
-    //
-    // const data = [];
-    // for (let i = 0; i < 3; ++i) {
-    //     data.push({
-    //         key: i,
-    //         id: 1,
-    //         name: 'Screem',
-    //         platform: 'iOS',
-    //         version: '10.3.4.5654',
-    //         upgradeNum: 500,
-    //         creator: 'Jack',
-    //         createdAt: '2014-12-24 23:12:00',
-    //     });
-    // }
+
+import 'antd/dist/antd.css'
+
+function Component(props: any) {
+
+
+
+
+
+    const cellClick = (e, i) => {
+        console.log(e);
+        console.log(i);
+        props.handleCellClick(e, i)
+    }
+
 
     const Columns = [
         { id: 'ID', dataIndex: 'id', key: 'id', width: 100, render: (text, record) => { return (<div style={{width: '100px'}}>{text}</div>) }},
@@ -163,9 +36,9 @@ function Component() {
                     title: 'T1',
                     width: 100,
                     children: [
-                        { title: 'E', dataIndex: 'enero2022', key: 'enero2022', width: 100},
-                        { title: 'F', dataIndex: 'febrero2022', key: 'febrero2022', width: 100},
-                        { title: 'M', dataIndex: 'marzo2022', key: 'marzo2022', width: 100},
+                        { title: 'E', dataIndex: 'enero2022', key: 'enero2022', width: 50, render: (text, record) => { return (<div style={{width: '100px'}} onClick={() => { cellClick(record)}}>{text}</div>) }},
+                        { title: 'F', dataIndex: 'febrero2022', key: 'febrero2022', width: 50, render: (text, record) => { return (<div style={{width: '100px'}} onClick={() => { cellClick(record)}}>{text}</div>) }},
+                        { title: 'M', dataIndex: 'marzo2022', key: 'marzo2022', width: 50, render: (text, record) => { return (<div style={{width: '100px'}} onClick={() => { cellClick(record)}}>{text}</div>) }},
                     ]
                 },
                 {
