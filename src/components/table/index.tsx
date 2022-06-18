@@ -35,7 +35,20 @@ function Component(props: any) {
                     title: 'T1',
                     width: 100,
                     children: [
-                        { title: 'E', dataIndex: 'enero2022', key: 'enero2022', width: 50, render: (text, record) => { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick(record)}}>{text}</div>) }},
+                        { title: 'E', dataIndex: 'enero2022', key: 'enero2022', width: 50, render: (text, record) => {
+                            console.log('----')
+                            console.log(record)
+                            let x = (record.xenero2022 == "")?"0":record.xenero2022
+                            if (record.enero2022 == "") text = ""
+                            else {
+                                text = x + "/" + record.enero2022
+                            }
+                            let color = 'blue'
+                            if (x < record.enero2022) color = 'black'
+
+
+                            return (<div style={{width: '50px', textAlign: 'center', color: color}} onClick={() => { cellClick(record)}}>{text}</div>)
+                        }},
                         { title: 'F', dataIndex: 'febrero2022', key: 'febrero2022', width: 50, render: (text, record) => { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick(record)}}>{text}</div>) }},
                         { title: 'M', dataIndex: 'marzo2022', key: 'marzo2022', width: 50, render: (text, record) => { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick(record)}}>{text}</div>) }},
                     ]
