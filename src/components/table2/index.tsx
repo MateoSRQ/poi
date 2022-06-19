@@ -36,7 +36,7 @@ function Component(props: any) {
                     width: 100,
                     children: [
                         { title: 'E', dataIndex: 'enero2022', key: 'enero2022', width: 50, render: (text, record) => {
-                            let x = (record.xenero2022 == "")?"0":record.xenero2022
+                            let x = record.enero2022
                             let color = 'blue'
                             if (x < record.enero2022) color = 'red'
                                 return (<div style={{width: '70px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick(record)}}>
@@ -44,7 +44,7 @@ function Component(props: any) {
                                 </div>)
                         }},
                         { title: 'F', dataIndex: 'febrero2022', key: 'febrero2022', width: 50, render: (text, record) => {
-                                let x = (record.xfebrero2022 == "")?"0":record.xfebrero2022
+                                let x = record.febrero2022
                                 let color = 'blue'
                                 if (x < record.febrero2022) color = 'red'
                                 return (<div style={{width: '70px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick(record)}}>
@@ -52,7 +52,7 @@ function Component(props: any) {
                                 </div>)
                             }},
                         { title: 'M', dataIndex: 'marzo2022', key: 'marzo2022', width: 50, render: (text, record) => {
-                                let x = (record.xmarzo2022 == "") ? "0" : record.xmarzo2022
+                                let x = record.marzo2022
                                 let color = 'blue'
                                 if (x < record.marzo2022) color = 'red'
                                 return (
@@ -75,7 +75,7 @@ function Component(props: any) {
                     width: 100,
                     children: [
                         { title: 'A', dataIndex: 'abril2022', key: 'abril2022', width: 50, render: (text, record) => {
-                                let x = (record.xabril2022 == "")?"0":record.xabril2022
+                                let x = record.abril2022
                                 let color = 'blue'
                                 if (x < record.abril2022) color = 'red'
                                 return (<div style={{width: '70px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick(record)}}>
@@ -83,7 +83,7 @@ function Component(props: any) {
                                 </div>)
                             }},
                         { title: 'M', dataIndex: 'mayo2022', key: 'mayo2022', width: 50, render: (text, record) => {
-                                let x = (record.xmayo2022 == "")?"0":record.xmayo2022
+                                let x = record.mayo2022 - Math.floor(Math.random() * (record.mayo2022 - 0)) + 0;
                                 let color = 'blue'
                                 if (x < record.mayo2022) color = 'red'
                                 return (<div style={{width: '70px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick(record)}}>

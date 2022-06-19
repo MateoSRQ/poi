@@ -5,13 +5,16 @@ import {Button, Drawer, Form, Input} from 'antd';
 import { useNavigate } from "react-router-dom";
 import 'antd/dist/antd.css'
 
-function Component() {
+export default function Component() {
     const [form] = Form.useForm();
     let navigate = useNavigate();
 
     const handleFinish = (e: any) => {
         if (e.username == 'admin') {
             navigate("../app", { replace: true });
+        }
+        else if (e.username == 'admin1') {
+            navigate("../app1", { replace: true });
         }
     }
 
@@ -42,4 +45,3 @@ function Component() {
     )
 }
 
-export default Component;
