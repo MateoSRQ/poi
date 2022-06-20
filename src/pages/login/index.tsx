@@ -16,6 +16,9 @@ export default function Component() {
         else if (e.username == 'admin1') {
             navigate("../app1", { replace: true });
         }
+        else if (e.username == 'admin2') {
+            navigate("../app2", { replace: true });
+        }
     }
 
     return (

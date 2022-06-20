@@ -39,16 +39,16 @@ function Component(props: any) {
                             let x = record.enero2022
                             let color = 'blue'
                             if (x < record.enero2022) color = 'red'
-                                return (<div style={{width: '70px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick(record)}}>
-                                    <div style={{backgroundColor: color, color: 'white', padding: '5px', width: '70px', borderRadius: '4px'}}>{x}/{text}</div>
+                                return (<div style={{width: '80px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick(record)}}>
+                                    <div style={{backgroundColor: color, color: 'white', padding: '5px', width: '80px', borderRadius: '4px'}}>{x}/{text}</div>
                                 </div>)
                         }},
                         { title: 'F', dataIndex: 'febrero2022', key: 'febrero2022', width: 50, render: (text, record) => {
                                 let x = record.febrero2022
                                 let color = 'blue'
                                 if (x < record.febrero2022) color = 'red'
-                                return (<div style={{width: '70px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick(record)}}>
-                                    <div style={{backgroundColor: color, color: 'white', padding: '5px', width: '70px', borderRadius: '4px'}}>{x}/{text}</div>
+                                return (<div style={{width: '80px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick(record)}}>
+                                    <div style={{backgroundColor: color, color: 'white', padding: '5px', width: '80px', borderRadius: '4px'}}>{x}/{text}</div>
                                 </div>)
                             }},
                         { title: 'M', dataIndex: 'marzo2022', key: 'marzo2022', width: 50, render: (text, record) => {
@@ -56,14 +56,14 @@ function Component(props: any) {
                                 let color = 'blue'
                                 if (x < record.marzo2022) color = 'red'
                                 return (
-                                    <div style={{width: '70px', textAlign: 'center', color: 'white'}} onClick={() => {
+                                    <div style={{width: '80px', textAlign: 'center', color: 'white'}} onClick={() => {
                                         cellClick(record)
                                     }}>
                                         <div style={{
                                             backgroundColor: color,
                                             color: 'white',
                                             padding: '5px',
-                                            width: '70px',
+                                            width: '80px',
                                             borderRadius: '4px'
                                         }}>{x}/{text}</div>
                                     </div>)
@@ -78,24 +78,28 @@ function Component(props: any) {
                                 let x = record.abril2022
                                 let color = 'blue'
                                 if (x < record.abril2022) color = 'red'
-                                return (<div style={{width: '70px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick(record)}}>
-                                    <div style={{backgroundColor: color, color: 'white', padding: '5px', width: '70px', borderRadius: '4px'}}>{x}/{text}</div>
+                                return (<div style={{width: '80px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick(record)}}>
+                                    <div style={{backgroundColor: color, color: 'white', padding: '5px', width: '80px', borderRadius: '4px'}}>{x}/{text}</div>
                                 </div>)
                             }},
                         { title: 'M', dataIndex: 'mayo2022', key: 'mayo2022', width: 50, render: (text, record) => {
                                 let x = record.mayo2022 - Math.floor(Math.random() * (record.mayo2022 - 0)) + 0;
                                 let color = 'blue'
-                                if (x < record.mayo2022) color = 'red'
-                                return (<div style={{width: '70px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick(record)}}>
-                                    <div style={{backgroundColor: color, color: 'white', padding: '5px', width: '70px', borderRadius: '4px'}}>{x}/{text}</div>
+                                if (x < record.mayo2022) {
+                                    //color = 'red'
+                                    let opacity = (record.mayo2022-x)/record.mayo2022
+                                    color = 'rgb(' + 255*opacity + ',0,' + 255*(1-opacity) +  ')'
+                                }
+                                return (<div style={{width: '80px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick(record)}}>
+                                    <div style={{backgroundColor: color, color: 'white', padding: '5px', width: '80px', borderRadius: '4px'}}>{x}/{text}</div>
                                 </div>)
                             }},
                         { title: 'J', dataIndex: 'junio2022', key: 'junio2022', width: 50, render: (text, record) => {
                                 let x = (record.xjunio2022 == "")?"0":record.xjunio2022
                                 let color = 'blue'
                                 if (x < record.junio2022) color = 'orange'
-                                return (<div style={{width: '70px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick(record)}}>
-                                    <div style={{backgroundColor: color, color: 'white', padding: '5px', width: '70px', borderRadius: '4px'}}>{x}/{text}</div>
+                                return (<div style={{width: '80px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick(record)}}>
+                                    <div style={{backgroundColor: color, color: 'white', padding: '5px', width: '80px', borderRadius: '4px'}}>{x}/{text}</div>
                                 </div>)
                             }},
                     ]
