@@ -181,6 +181,46 @@ function TreeCalc(node: any) {
     }
 }
 
+function TreeCalc2(node: any) {
+
+    if (node.children) {
+        let sum = {
+            "xenero2022": 0,
+            "xfebrero2022": 0,
+            "xmarzo2022": 0,
+            "xabril2022": 0,
+            "xmayo2022": 0,
+
+        }
+        for (let i=0; i<node.children.length; i++) {
+            sum.xenero2022 += TreeCalc2(node.children[i]).xenero2022
+            sum.xfebrero2022 += TreeCalc2(node.children[i]).xfebrero2022
+            sum.xmarzo2022 += TreeCalc2(node.children[i]).xmarzo2022
+            sum.xabril2022 += TreeCalc2(node.children[i]).xabril2022
+            sum.xmayo2022 += TreeCalc2(node.children[i]).xmayo2022
+        }
+        node.xenero2022 = sum.xenero2022;
+        node.xfebrero2022= sum.xfebrero2022;
+        node.xmarzo2022 = sum.xmarzo2022;
+        node.xabril2022 = sum.xabril2022;
+        node.xmayo2022 = sum.xmayo2022;
+
+
+        return sum;
+    }
+    else {
+        return {
+            "xenero2022": (isNaN(node.xenero2022) || node.xenero2022 == "" || node.xenero2022 == undefined)?0:parseInt(node.xenero2022) ,
+            "xfebrero2022": (isNaN(node.xfebrero2022) || node.xfebrero2022 == "" || node.xfebrero2022 == undefined)?0:parseInt(node.xfebrero2022) ,
+            "xmarzo2022": (isNaN(node.xmarzo2022) || node.xmarzo2022 == "" || node.xmarzo2022 == undefined)?0:parseInt(node.xmarzo2022) ,
+            "xabril2022": (isNaN(node.xabril2022) || node.xabril2022 == "" || node.xabril2022 == undefined)?0:parseInt(node.xabril2022) ,
+            "xmayo2022": (isNaN(node.xmayo2022) || node.xmayo2022 == "" || node.xmayo2022 == undefined)?0:parseInt(node.xmayo2022) ,
+        }
+        //if (isNaN(node.xenero2022) || node.xenero2022 == "") return 0
+        //return parseInt(node.xenero2022)
+    }
+}
+
 
 function Component() {
     const [visible, setVisible] = useState(false);
@@ -236,7 +276,7 @@ function Component() {
             "xfebrero2022": "",
             "xmarzo2022": "",
             "xabril2022": "",
-            "xmayo2022": "",
+            "xmayo2022": "0",
             "xjunio2022": "",
             "xjulio2022": "",
             "xagosto2022": "",
@@ -319,7 +359,7 @@ function Component() {
                     "xfebrero2022": "",
                     "xmarzo2022": "",
                     "xabril2022": "",
-                    "xmayo2022": "",
+                    "xmayo2022": "0",
                     "xjunio2022": "",
                     "xjulio2022": "",
                     "xagosto2022": "",
@@ -402,7 +442,7 @@ function Component() {
                             "xfebrero2022": "",
                             "xmarzo2022": "",
                             "xabril2022": "",
-                            "xmayo2022": "",
+                            "xmayo2022": "0",
                             "xjunio2022": "",
                             "xjulio2022": "",
                             "xagosto2022": "",
@@ -568,7 +608,7 @@ function Component() {
                                     "xfebrero2022": "",
                                     "xmarzo2022": "",
                                     "xabril2022": "",
-                                    "xmayo2022": "",
+                                    "xmayo2022": "0",
                                     "xjunio2022": "",
                                     "xjulio2022": "",
                                     "xagosto2022": "",
@@ -902,7 +942,7 @@ function Component() {
                             "xfebrero2022": "",
                             "xmarzo2022": "",
                             "xabril2022": "",
-                            "xmayo2022": "",
+                            "xmayo2022": "0",
                             "xjunio2022": "",
                             "xjulio2022": "",
                             "xagosto2022": "",
@@ -985,7 +1025,7 @@ function Component() {
                                     "xfebrero2022": "",
                                     "xmarzo2022": "",
                                     "xabril2022": "",
-                                    "xmayo2022": "",
+                                    "xmayo2022": "0",
                                     "xjunio2022": "",
                                     "xjulio2022": "",
                                     "xagosto2022": "",
@@ -1233,7 +1273,7 @@ function Component() {
                                     "xfebrero2022": "",
                                     "xmarzo2022": "",
                                     "xabril2022": "",
-                                    "xmayo2022": "",
+                                    "xmayo2022": "0",
                                     "xjunio2022": "",
                                     "xjulio2022": "",
                                     "xagosto2022": "",
@@ -1399,7 +1439,7 @@ function Component() {
                                     "xfebrero2022": "",
                                     "xmarzo2022": "",
                                     "xabril2022": "",
-                                    "xmayo2022": "",
+                                    "xmayo2022": "0",
                                     "xjunio2022": "",
                                     "xjulio2022": "",
                                     "xagosto2022": "",
@@ -1482,7 +1522,7 @@ function Component() {
                                     "xfebrero2022": "",
                                     "xmarzo2022": "",
                                     "xabril2022": "",
-                                    "xmayo2022": "",
+                                    "xmayo2022": "0",
                                     "xjunio2022": "",
                                     "xjulio2022": "",
                                     "xagosto2022": "",
@@ -1541,10 +1581,10 @@ function Component() {
 
 
     useEffect(() => {
-        // TreeCalc(NewData[0])
-        // TreeCalc(NewData[1])
-        // TreeCalc(NewData[2])
-        // TreeCalc(NewData[3])
+        // TreeCalc2(NewData[0])
+        // TreeCalc2(NewData[1])
+        // TreeCalc2(NewData[2])
+        // TreeCalc2(NewData[3])
         // @ts-ignore
         setData(NewData);
     }, [])

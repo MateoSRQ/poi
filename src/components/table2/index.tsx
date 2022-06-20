@@ -82,7 +82,7 @@ function Component(props: any) {
                                 </div>)
                             }},
                         { title: 'M', dataIndex: 'mayo2022', key: 'mayo2022', width: 50, render: (text:any, record:any) => {
-                                let x = record.mayo2022 - Math.floor(Math.random() * (record.mayo2022 - 0)) + 0;
+                                let x = record.xmayo2022
                                 let color = 'blue'
                                 if (x < record.mayo2022) {
                                     //color = 'red'
