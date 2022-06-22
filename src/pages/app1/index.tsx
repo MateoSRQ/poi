@@ -189,9 +189,6 @@ function TreeCalc(node: any) {
     }
 }
 
-
-
-
 function Component() {
     const [visible, setVisible] = useState(false);
     const [data, setData] = useState([])

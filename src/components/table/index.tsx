@@ -4,7 +4,8 @@ import style from './index.module.css'
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/lib/table';
 import React from 'react';
-
+import { Select, Tag } from 'antd';
+import type { CustomTagProps } from 'rc-select/lib/BaseSelect';
 
 import 'antd/dist/antd.css'
 
@@ -17,13 +18,35 @@ function Component(props: any) {
         console.log(e);
         props.handleCellClick(e)
     }
+    const [columns, setColumns] = useState([])
 
 
-    const Columns = [
-        { id: 'ID', dataIndex: 'id', key: 'id', width: 100, render: (text: any, record: any)=> { return (<div style={{width: '100px'}}>{text}</div>) }},
-        { title: 'Índice', dataIndex: 'indice', key: 'indice', width: 100 },
-        { title: 'Nombre', dataIndex: 'nombre', key: 'nombre', width: 500, render: (text: any, record: any)=> { return (<div style={{width: '1000px'}}>{text}</div>) }},
-        { title: 'Responsable', dataIndex: 'responsable', key: 'responsable', width: 500, render: (text: any, record: any)=> { return (<div style={{width: '500px'}}>{text}</div>) }},
+    const Columns = {
+        ID: {
+            id: 'ID', dataIndex: 'id', key: 'id', width: 100, render: (text: any, record: any) => {
+                return (<div style={{width: '100px'}}>{text}</div>)
+            }
+        },
+        // { title: 'Índice', dataIndex: 'indice', key: 'indice', width: 100 },
+        Nombre: {
+            title: 'Nombre', dataIndex: 'nombre', key: 'nombre', width: 500, render: (text: any, record: any) => {
+                return (
+                    <div style={{width: '650px'}}>
+                        <div>{text.split(':')[0]}</div>
+                        <div>{text.split(':')[1]}</div>
+                    </div>)
+            }
+        },
+        Responsable: {
+            title: 'Responsable',
+            dataIndex: 'responsable',
+            key: 'responsable',
+            width: 500,
+            render: (text: any, record: any) => {
+                return (<div style={{width: '500px'}}>{text}</div>)
+            }
+        }
+        /*
         { title: 'Unidad de Medida', dataIndex: 'um', key: 'um', width: 100, render: (text: any, record: any)=> { return (<div style={{width: '400px'}}>{text}</div>) }},
         { title: 'Meta Física', dataIndex: 'meta', key: 'meta', width: 100, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}}>{text}</div>) }},
         {
@@ -212,23 +235,56 @@ function Component(props: any) {
                 {title: '2024', dataIndex: 'ppto2024', key: 'ppto2024', width: 150, render: (text: any, record: any)=> { return (<div style={{width: '150px', textAlign: 'center'}} onClick={() => { cellClick(record)}}>{text}</div>) }},
             ]
         }
-    ];
+
+         */
+        //];
+    }
 
     const expandedRowRender = () => {
         return <Table />
     }
+    const options=[{"value": 'ID'}, {"value":'Nombre'}, {"value":'Responsables'}, {"value":'Unidad de Medida'}]
 
+    const handleChange = (e: any) => {
+        console.log(e);
+        let _columns = [];
+        for (const column of columns) {
+            console.log('column: ' + column)
+            _columns.push([Columns[column]])
+        }
+        // @ts-ignore
+        setColumns(_columns);
+
+    }
+
+    console.log(columns)
 
     return (
 
     <div className={style.component}>
+
+        <Select
+            mode="multiple"
+            onChange={handleChange}
+            showArrow
+            // tagRender={tagRender}
+            // defaultValue={['gold', 'cyan']}
+            style={{ width: '100%', maxWidth: '400px' }}
+            options={options}
+        />
+
+
+
         <Table
             className={style.level1}
-            columns={Columns}
+            columns={columns}
             dataSource={props.data}
 
             expandable={{
-                defaultExpandAllRows: true
+                indentSize: 5,
+                columnWidth: '30px',
+                onExpand: (expanded, record) =>
+                    console.log("onExpand: ", record, expanded),
             }}
             //scroll={{ x: 1300 }}
         />

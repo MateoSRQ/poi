@@ -11,7 +11,7 @@ export default function Component() {
 
     const handleFinish = (e: any) => {
         if (e.username == 'admin') {
-            navigate("../app", { replace: true });
+            navigate("http://www.google.com", { replace: true });
         }
         else if (e.username == 'admin1') {
             navigate("../app1", { replace: true });
@@ -33,7 +33,7 @@ export default function Component() {
                     form={form}
                     onFinish={handleFinish}
                 >
-                    <Form.Item label="Usuario" name="username">
+                    <Form.Item label="Usuario" name="username" rules={[{ required: true }, {len: 5 }]}>
                         <Input placeholder="" />
                     </Form.Item>
                     <Form.Item label="Contraseña" name="password">
