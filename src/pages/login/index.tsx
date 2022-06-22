@@ -11,7 +11,7 @@ export default function Component() {
 
     const handleFinish = (e: any) => {
         if (e.username == 'admin') {
-            navigate("http://www.google.com", { replace: true });
+            navigate("../app", { replace: true });
         }
         else if (e.username == 'admin1') {
             navigate("../app1", { replace: true });

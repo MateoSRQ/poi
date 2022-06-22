@@ -45,11 +45,11 @@ function Component(props: any) {
             render: (text: any, record: any) => {
                 return (<div style={{width: '500px'}}>{text}</div>)
             }
-        }
-        /*
-        { title: 'Unidad de Medida', dataIndex: 'um', key: 'um', width: 100, render: (text: any, record: any)=> { return (<div style={{width: '400px'}}>{text}</div>) }},
-        { title: 'Meta Física', dataIndex: 'meta', key: 'meta', width: 100, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}}>{text}</div>) }},
-        {
+        },
+        'Unidad de Medida': { title: 'Unidad de Medida', dataIndex: 'um', key: 'um', width: 100, render: (text: any, record: any)=> { return (<div style={{width: '400px'}}>{text}</div>) }},
+
+        'Meta Física': { title: 'Meta Física', dataIndex: 'meta', key: 'meta', width: 100, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}}>{text}</div>) }},
+        '2022' : {
             title: '2022',
             width: 100,
             children: [
@@ -142,7 +142,7 @@ function Component(props: any) {
                 },
             ]
         },
-        {
+        '2023' : {
             title: '2023',
             width: 100,
             children: [
@@ -184,7 +184,7 @@ function Component(props: any) {
                 },
             ]
         },
-        {
+        '2024' : {
             title: '2024',
             width: 100,
             children: [
@@ -226,7 +226,7 @@ function Component(props: any) {
                 },
             ]
         },
-        {
+        'Presupuesto' : {
             title: 'Presupuesto',
             width: 100,
             children: [
@@ -236,27 +236,39 @@ function Component(props: any) {
             ]
         }
 
-         */
         //];
     }
 
     const expandedRowRender = () => {
         return <Table />
     }
-    const options=[{"value": 'ID'}, {"value":'Nombre'}, {"value":'Responsables'}, {"value":'Unidad de Medida'}]
+    const options=[
+        {"value": 'ID'},
+        {"value":'Nombre'},
+        {"value":'Responsable'},
+        {"value":'Unidad de Medida'},
+        {"value":'Meta Física'},
+        {"value":'2022'},
+        {"value":'2023'},
+        {"value":'2024'},
+        {"value":'Presupuesto'},
+    ]
+
 
     const handleChange = (e: any) => {
         console.log(e);
         let _columns = [];
-        for (const column of columns) {
+        for (const column of e) {
             console.log('column: ' + column)
-            _columns.push([Columns[column]])
+            // @ts-ignore
+            _columns.push(Columns[column])
         }
         // @ts-ignore
         setColumns(_columns);
 
     }
 
+    console.log('columns')
     console.log(columns)
 
     return (
