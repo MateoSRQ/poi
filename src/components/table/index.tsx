@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import {useEffect, useState} from 'react'
 import logo from './logo.svg'
 import style from './index.module.css'
 import { Table } from 'antd';
@@ -20,11 +20,10 @@ function Component(props: any) {
     }
     const [columns, setColumns] = useState([])
 
-
     const Columns = {
         ID: {
             id: 'ID', dataIndex: 'id', key: 'id', width: 100, render: (text: any, record: any) => {
-                return (<div style={{width: '100px'}}>{text}</div>)
+                return (<div style={{width: '40px'}}>{text}</div>)
             }
         },
         // { title: 'Índice', dataIndex: 'indice', key: 'indice', width: 100 },
@@ -243,7 +242,6 @@ function Component(props: any) {
         return <Table />
     }
     const options=[
-        {"value": 'ID'},
         {"value":'Nombre'},
         {"value":'Responsable'},
         {"value":'Unidad de Medida'},
@@ -253,6 +251,7 @@ function Component(props: any) {
         {"value":'2024'},
         {"value":'Presupuesto'},
     ]
+
 
 
     const handleChange = (e: any) => {
@@ -268,6 +267,11 @@ function Component(props: any) {
 
     }
 
+    useEffect(()=> {
+        handleChange(['ID', 'Nombre', '2022'])
+    }, [])
+
+
     console.log('columns')
     console.log(columns)
 
@@ -280,7 +284,7 @@ function Component(props: any) {
             onChange={handleChange}
             showArrow
             // tagRender={tagRender}
-            // defaultValue={['gold', 'cyan']}
+            defaultValue={columns}
             style={{ width: '100%', maxWidth: '400px' }}
             options={options}
         />
