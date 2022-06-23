@@ -11,14 +11,12 @@ import 'antd/dist/antd.css'
 
 function Component(props: any) {
 
-    console.log('Table');
-    console.log(props.data);
-
-    const cellClick = (e: any) => {
+    const cellClick = (i: any, e: any) => {
         console.log(e);
-        props.handleCellClick(e)
+        props.handleCellClick(i, e)
     }
     const [columns, setColumns] = useState([])
+    const [selected, setSelected] = useState(['ID', 'Nombre', '2022'])
 
     const Columns = {
         ID: {
@@ -26,7 +24,7 @@ function Component(props: any) {
                 return (<div style={{width: '40px'}}>{text}</div>)
             }
         },
-        // { title: 'Índice', dataIndex: 'indice', key: 'indice', width: 100 },
+        'Índice': { title: 'Índice', dataIndex: 'indice', key: 'indice', width: 100 },
         Nombre: {
             title: 'Nombre', dataIndex: 'nombre', key: 'nombre', width: 500, render: (text: any, record: any) => {
                 return (
@@ -56,29 +54,29 @@ function Component(props: any) {
                     title: 'T1',
                     width: 100,
                     children: [
-                        { title: 'E', dataIndex: 'enero2022', key: 'enero2022', width: 50, render: (text: any, record: any)=> {
+                        { title: 'Enero', dataIndex: 'enero2022', key: 'enero2022', width: 50, render: (text: any, record: any)=> {
                             let x = (record.xenero2022 == "")?"0":record.xenero2022
                             let color = 'blue'
                             if (x < record.enero2022) color = 'red'
-                                return (<div style={{width: '80px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick(record)}}>
+                                return (<div style={{width: '80px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick('enero2022', record)}}>
                                     <div style={{backgroundColor: color, color: 'white', padding: '5px', width: '80px', borderRadius: '4px'}}>{x}/{text}</div>
                                 </div>)
                         }},
-                        { title: 'F', dataIndex: 'febrero2022', key: 'febrero2022', width: 50, render: (text: any, record: any)=> {
+                        { title: 'Febrero', dataIndex: 'febrero2022', key: 'febrero2022', width: 50, render: (text: any, record: any)=> {
                                 let x = (record.xfebrero2022 == "")?"0":record.xfebrero2022
                                 let color = 'blue'
                                 if (x < record.febrero2022) color = 'red'
-                                return (<div style={{width: '80px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick(record)}}>
+                                return (<div style={{width: '80px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick('febrero2022', record)}}>
                                     <div style={{backgroundColor: color, color: 'white', padding: '5px', width: '80px', borderRadius: '4px'}}>{x}/{text}</div>
                                 </div>)
                             }},
-                        { title: 'M', dataIndex: 'marzo2022', key: 'marzo2022', width: 50, render: (text: any, record: any)=> {
+                        { title: 'Marzo', dataIndex: 'marzo2022', key: 'marzo2022', width: 50, render: (text: any, record: any)=> {
                                 let x = (record.xmarzo2022 == "") ? "0" : record.xmarzo2022
                                 let color = 'blue'
                                 if (x < record.marzo2022) color = 'red'
                                 return (
                                     <div style={{width: '80px', textAlign: 'center', color: 'white'}} onClick={() => {
-                                        cellClick(record)
+                                        cellClick('marzo2022', record)
                                     }}>
                                         <div style={{
                                             backgroundColor: color,
@@ -95,27 +93,27 @@ function Component(props: any) {
                     title: 'T2',
                     width: 100,
                     children: [
-                        { title: 'A', dataIndex: 'abril2022', key: 'abril2022', width: 50, render: (text: any, record: any)=> {
+                        { title: 'Abril', dataIndex: 'abril2022', key: 'abril2022', width: 50, render: (text: any, record: any)=> {
                                 let x = (record.xabril2022 == "")?"0":record.xabril2022
                                 let color = 'blue'
                                 if (x < record.abril2022) color = 'red'
-                                return (<div style={{width: '80px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick(record)}}>
+                                return (<div style={{width: '80px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick('abril2022', record)}}>
                                     <div style={{backgroundColor: color, color: 'white', padding: '5px', width: '80px', borderRadius: '4px'}}>{x}/{text}</div>
                                 </div>)
                             }},
-                        { title: 'M', dataIndex: 'mayo2022', key: 'mayo2022', width: 50, render: (text: any, record: any)=> {
+                        { title: 'Mayo', dataIndex: 'mayo2022', key: 'mayo2022', width: 50, render: (text: any, record: any)=> {
                                 let x = (record.xmayo2022 == "")?"0":record.xmayo2022
                                 let color = 'blue'
                                 if (x < record.mayo2022) color = 'red'
-                                return (<div style={{width: '80px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick(record)}}>
+                                return (<div style={{width: '80px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick('mayo2022', record)}}>
                                     <div style={{backgroundColor: color, color: 'white', padding: '5px', width: '80px', borderRadius: '4px'}}>{x}/{text}</div>
                                 </div>)
                             }},
-                        { title: 'J', dataIndex: 'junio2022', key: 'junio2022', width: 50, render: (text: any, record: any)=> {
+                        { title: 'Junio', dataIndex: 'junio2022', key: 'junio2022', width: 50, render: (text: any, record: any)=> {
                                 let x = (record.xjunio2022 == "")?"0":record.xjunio2022
                                 let color = 'blue'
                                 if (x < record.junio2022) color = 'orange'
-                                return (<div style={{width: '80px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick(record)}}>
+                                return (<div style={{width: '80px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick('junio2022', record)}}>
                                     <div style={{backgroundColor: color, color: 'white', padding: '5px', width: '80px', borderRadius: '4px'}}>{x}/{text}</div>
                                 </div>)
                             }},
@@ -125,18 +123,18 @@ function Component(props: any) {
                     title: 'T3',
                     width: 100,
                     children: [
-                        { title: 'J', dataIndex: 'julio2022', key: 'julio2022', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick(record)}}>{text}</div>) }},
-                        { title: 'A', dataIndex: 'agosto2022', key: 'agosto2022', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick(record)}}>{text}</div>) }},
-                        { title: 'S', dataIndex: 'setiembre2022', key: 'setiembre2022', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick(record)}}>{text}</div>) }},
+                        { title: 'Julio', dataIndex: 'julio2022', key: 'julio2022', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick('julio2022', record)}}>{text}</div>) }},
+                        { title: 'Agosto', dataIndex: 'agosto2022', key: 'agosto2022', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick('agosto2022', record)}}>{text}</div>) }},
+                        { title: 'Setiembre', dataIndex: 'setiembre2022', key: 'setiembre2022', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick('setiembre2022', record)}}>{text}</div>) }},
                     ]
                 },
                 {
                     title: 'T4',
                     width: 100,
                     children: [
-                        { title: 'O', dataIndex: 'octubre2022', key: 'octubre2022', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick(record)}}>{text}</div>) }},
-                        { title: 'N', dataIndex: 'noviembre2022', key: 'noviembre2022', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick(record)}}>{text}</div>) }},
-                        { title: 'D', dataIndex: 'diciembre2022', key: 'diciembre2022', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick(record)}}>{text}</div>) }},
+                        { title: 'Octubre', dataIndex: 'octubre2022', key: 'octubre2022', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick('octubre2022', record)}}>{text}</div>) }},
+                        { title: 'Noviembre', dataIndex: 'noviembre2022', key: 'noviembre2022', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick('noviembre2022', record)}}>{text}</div>) }},
+                        { title: 'Diciembre', dataIndex: 'diciembre2022', key: 'diciembre2022', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick('diciembre2022', record)}}>{text}</div>) }},
                     ]
                 },
             ]
@@ -149,36 +147,36 @@ function Component(props: any) {
                     title: 'T1',
                     width: 100,
                     children: [
-                        { title: 'E', dataIndex: 'enero2023', key: 'enero2023', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick(record)}}>{text}</div>) }},
-                        { title: 'F', dataIndex: 'febrero2023', key: 'febrero2023', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick(record)}}>{text}</div>) }},
-                        { title: 'M', dataIndex: 'marzo2023', key: 'marzo2023', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick(record)}}>{text}</div>) }},
+                        { title: 'E', dataIndex: 'enero2023', key: 'enero2023', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick('enero2023', record)}}>{text}</div>) }},
+                        { title: 'F', dataIndex: 'febrero2023', key: 'febrero2023', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick('febrero2023', record)}}>{text}</div>) }},
+                        { title: 'M', dataIndex: 'marzo2023', key: 'marzo2023', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick('marzo2023', record)}}>{text}</div>) }},
                     ]
                 },
                 {
                     title: 'T2',
                     width: 100,
                     children: [
-                        { title: 'A', dataIndex: 'abril2023', key: 'abril2023', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick(record)}}>{text}</div>) }},
-                        { title: 'M', dataIndex: 'mayo2023', key: 'mayo2023', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick(record)}}>{text}</div>) }},
-                        { title: 'J', dataIndex: 'junio2023', key: 'junio2023', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick(record)}}>{text}</div>) }},
+                        { title: 'A', dataIndex: 'abril2023', key: 'abril2023', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick('abril2023', record)}}>{text}</div>) }},
+                        { title: 'M', dataIndex: 'mayo2023', key: 'mayo2023', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => {  cellClick('mayo2023',record)}}>{text}</div>) }},
+                        { title: 'J', dataIndex: 'junio2023', key: 'junio2023', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick('junio2023',record)}}>{text}</div>) }},
                     ]
                 },
                 {
                     title: 'T3',
                     width: 100,
                     children: [
-                        { title: 'J', dataIndex: 'julio2023', key: 'julio2023', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick(record)}}>{text}</div>) }},
-                        { title: 'A', dataIndex: 'agosto2023', key: 'agosto2023', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick(record)}}>{text}</div>) }},
-                        { title: 'S', dataIndex: 'setiembre2023', key: 'setiembre2023', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick(record)}}>{text}</div>) }},
+                        { title: 'J', dataIndex: 'julio2023', key: 'julio2023', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick('julio2023', record)}}>{text}</div>) }},
+                        { title: 'A', dataIndex: 'agosto2023', key: 'agosto2023', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick('agosto2023',record)}}>{text}</div>) }},
+                        { title: 'S', dataIndex: 'setiembre2023', key: 'setiembre2023', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick('setiembre2023', record)}}>{text}</div>) }},
                     ]
                 },
                 {
                     title: 'T4',
                     width: 100,
                     children: [
-                        { title: 'O', dataIndex: 'octubre2023', key: 'octubre2023', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick(record)}}>{text}</div>) }},
-                        { title: 'N', dataIndex: 'noviembre2023', key: 'noviembre2023', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick(record)}}>{text}</div>) }},
-                        { title: 'D', dataIndex: 'diciembre2023', key: 'diciembre2023', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick(record)}}>{text}</div>) }},
+                        { title: 'O', dataIndex: 'octubre2023', key: 'octubre2023', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => {  cellClick('octubre2023',record)}}>{text}</div>) }},
+                        { title: 'N', dataIndex: 'noviembre2023', key: 'noviembre2023', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick('noviembre2023', record)}}>{text}</div>) }},
+                        { title: 'D', dataIndex: 'diciembre2023', key: 'diciembre2023', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => {  cellClick('diciembre2023',record)}}>{text}</div>) }},
                     ]
                 },
             ]
@@ -242,6 +240,8 @@ function Component(props: any) {
         return <Table />
     }
     const options=[
+        {"value":'ID'},
+        {"value": 'Índice'},
         {"value":'Nombre'},
         {"value":'Responsable'},
         {"value":'Unidad de Medida'},
@@ -256,20 +256,25 @@ function Component(props: any) {
 
     const handleChange = (e: any) => {
         console.log(e);
-        let _columns = [];
-        for (const column of e) {
+        setSelected(e)
+       // let _columns = ['ID'];
+
+        //setColumns(_columns);
+
+    }
+
+    useEffect(()=> {
+        //handleChange(selected)
+        let _columns = []
+        //selected.unshift('ID', 'Nombre')
+        for (const column of selected) {
             console.log('column: ' + column)
             // @ts-ignore
             _columns.push(Columns[column])
         }
         // @ts-ignore
-        setColumns(_columns);
-
-    }
-
-    useEffect(()=> {
-        handleChange(['ID', 'Nombre', '2022'])
-    }, [])
+        setColumns(_columns)
+    }, [selected])
 
 
     console.log('columns')
@@ -284,7 +289,7 @@ function Component(props: any) {
             onChange={handleChange}
             showArrow
             // tagRender={tagRender}
-            defaultValue={columns}
+            defaultValue={selected}
             style={{ width: '100%', maxWidth: '400px' }}
             options={options}
         />
@@ -295,7 +300,7 @@ function Component(props: any) {
             className={style.level1}
             columns={columns}
             dataSource={props.data}
-
+            pagination={false}
             expandable={{
                 indentSize: 5,
                 columnWidth: '30px',
