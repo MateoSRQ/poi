@@ -4,21 +4,32 @@ import style from './index.module.css'
 import {Button, Drawer, Form, Input} from 'antd';
 import { useNavigate } from "react-router-dom";
 import 'antd/dist/antd.css'
+import {useStore} from '../../store'
+
 
 export default function Component() {
     const [form] = Form.useForm();
+    let username = useStore(state => state.username)
+    let route    = useStore(state => state.route)
     let navigate = useNavigate();
+    const login = useStore(state => state.login);
+
+
+    console.log(username)
+
+    useEffect(() => {
+        console.log('useEffect')
+        if (username && route) {
+            navigate("../" + route, { replace: true });
+        }
+
+    },[username])
+
 
     const handleFinish = (e: any) => {
-        if (e.username == 'admin') {
-            navigate("../app", { replace: true });
-        }
-        else if (e.username == 'admin1') {
-            navigate("../app1", { replace: true });
-        }
-        else if (e.username == 'admin2') {
-            navigate("../app2", { replace: true });
-        }
+        console.log('handleFinish');
+        login(e.username, e.password);
+        navigate("/", { replace: true });
     }
 
     return (
@@ -33,7 +44,7 @@ export default function Component() {
                     form={form}
                     onFinish={handleFinish}
                 >
-                    <Form.Item label="Usuario" name="username" rules={[{ required: true }, {len: 5 }]}>
+                    <Form.Item label="Usuario" name="username" rules={[{ required: true }]}>
                         <Input placeholder="" />
                     </Form.Item>
                     <Form.Item label="Contraseña" name="password">
