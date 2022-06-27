@@ -648,7 +648,7 @@ function Component() {
 
     let emptyItems = []
 
-    for (let i=0; i<cellData.text; i++) {
+    for (let i=0; i<2; i++) {
         emptyItems.push(
             <Card
                 className={style.ecocard}
