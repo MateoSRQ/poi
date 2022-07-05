@@ -11,6 +11,7 @@ import {
 import App2 from "../app2";
 import App1 from "../app1";
 import App3 from "../app";
+import Edit from "../edit";
 import Login from "../login";
 import provider from "../../components/authprovider"
 import {useStore} from '../../store';
@@ -25,12 +26,9 @@ function AuthProvider({children}: { children: React.ReactNode }) {
     let component: React.ReactNode = null;
 
     if (username) {
-        console.log('yyy')
-        //return children
         component = children
     }
     else {
-        console.log('xxx')
         navigate('/', {replace: true})
     }
     return (
@@ -47,6 +45,11 @@ export default function App() {
             <Route path="/app" element={
                 <AuthProvider>
                     <App3/>
+                </AuthProvider>
+            }/>
+            <Route path="/Edit" element={
+                <AuthProvider>
+                    <Edit/>
                 </AuthProvider>
             }/>
             <Route path="*" element={<Login/>}/>

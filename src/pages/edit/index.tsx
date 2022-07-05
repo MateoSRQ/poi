@@ -9,7 +9,7 @@ import {
     SearchOutlined,
     CheckCircleOutlined, UploadOutlined, InboxOutlined
 } from '@ant-design/icons';
-import {Avatar, Card, Form, Input, Row, Upload, UploadProps} from 'antd';
+import {Avatar, Card, Form, Input, Row, Upload} from 'antd';
 
 import Table from '../../components/table'
 import {Button, Drawer, Col} from 'antd';
@@ -19,8 +19,6 @@ import 'antd/dist/antd.css'
 import axios from 'axios'
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
-import {UploadFile} from "antd/es/upload/interface";
-
 
 const antIcon = <LoadingOutlined style={{ fontSize: 64}} spin />;
 const {Meta} = Card;
@@ -214,7 +212,6 @@ function TransformJSON(node: any) {
                     //console.log('            '    + n4.nombre)
                     n3children.push({
                         key:           x + '.' + y + '.' + z + '.' + w,
-                        id:            n4.idactividad,
                         indice:        x + '.' + y + '.' + z + '.' + w,
                         nombre:        n4.nombre,
                         responsable:   null,
@@ -343,7 +340,6 @@ function TransformJSON(node: any) {
                         onoviembre2024: UndefinedToZero (n4.listaActividadesMetas[2].novobs),
                         odiciembre2024: UndefinedToZero (n4.listaActividadesMetas[2].dicobs),
                     })
-                    w++;
                 }
                 n2children.push({
                     key:           x + '.' + y + '.' + z,
@@ -438,7 +434,7 @@ function TransformJSON(node: any) {
                     ppto2024:       UndefinedToZero (n3.listaObjetivoMetaN3[2].monto),
                     children: n3children
                 })
-                w=1;
+                w=0;
                 z++;
             }
             n1children.push({
@@ -534,8 +530,8 @@ function TransformJSON(node: any) {
                 ppto2024:       UndefinedToZero (n2.listaObjetivoMetaN2[2].monto),
                 children:       n2children
             })
-            z=1;
-            w=1;
+            z=0;
+            w=0;
             y++;
         }
         results.push({
@@ -631,9 +627,9 @@ function TransformJSON(node: any) {
             ppto2024:       UndefinedToZero (n1.listaObjetivoMetaN1[2].monto),
             children:       n1children            
         })
-        y=1;
-        z=1;
-        y=1;
+        y=0;
+        z=0;
+        y=0;
         x++
     }
     return results
@@ -643,7 +639,6 @@ function Component() {
     const [visible, setVisible] = useState(false);
     const [data, setData] = useState(null)
     const [cellData, setCellData] = useState<any>(null)
-    const [files, setFiles] = useState<any>([]);
 
 
     let db = new PouchDB('poi_database');
@@ -654,7 +649,7 @@ function Component() {
     useEffect(() => {
 
         const readData = async () => {
-            let response = await axios.post(import.meta.env.VITE_BASE_ENDPOINT_URL  + 'listar-actividades', {
+            let response = await axios.post(import.meta.env.VITE_BASE_ENDPOINT_URL  + 'poi/listar-actividades', {
                 "dato":{
                     "idusuarioResponsable":1
                 }
@@ -687,64 +682,11 @@ function Component() {
     const onClose = () => {
         setVisible(false);
     }
-
-    // @ts-ignore
-    const dummyRequest = ({ file, onSuccess }, multiple: any, limit: any) => {
-        console.log('dummyRequest')
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setFiles(
-                [
-                    ...files,
-                    {
-                        uid: (new Date()).getMilliseconds(),
-                        name: file.name,
-                        status: 'done',
-                        url: reader.result,
-                        file: file,
-                    }
-                ]
-            )
-        }
-        if (file) {
-            reader.readAsDataURL(file);
-        }
-        setTimeout(() => {
-            onSuccess("ok");
-        }, 0);
-    };
-
-    const handleSubmit = async () => {
-        try {
-            console.log('handleSubmit')
-            console.log(files[0])
-            let form = new FormData()
-            form.append('codigoapp', '40')
-            form.append('tag', '2')
-            form.append('archivos', files[0].file)
-            const response = await axios.post(import.meta.env.VITE_UPLOAD_URL, form, {
-                headers: {'Content-Type': 'multipart/form-data'}
-            })
-            console.log(response)
-            if (response.status == 200) {
-                const response2 = await axios.post(import.meta.env.VITE_VITE_BASE_ENDPOINT_URL + 'procesar-accion', {
-                    dato: {
-                        idactividadperiodo:
-                    }
-                })
-            }
-        }
-        catch (e) {
-
-        }
-    }
-
     console.log(data)
 
     let emptyItems = []
 
-    for (let i=0; i<1; i++) {
-        // @ts-ignore
+    for (let i=0; i<2; i++) {
         emptyItems.push(
             <Card
                 className={style.ecocard}
@@ -754,18 +696,17 @@ function Component() {
                     layout='vertical'
                 >
                     <Form.Item>
-                        <Form.Item name="dragger" valuePropName="file"  noStyle>
-                            <Upload
-                                //accept={accept}
-                                customRequest={(f) => dummyRequest(f, false, 1)}
-                                fileList={[]}
-                            >
-                                <Button block={true} icon={<UploadOutlined />}>{files.length?files[0].name:'Subir archivo...'}</Button>
-                            </Upload>
+                        <Form.Item name="dragger" valuePropName="fileList"  noStyle>
+                            <Upload.Dragger name="files" action="/upload.do">
+                                <p className="ant-upload-drag-icon">
+                                    <InboxOutlined />
+                                </p>
+                                <p className="ant-upload-text">Hacer clic o arrastar archivo</p>
+                            </Upload.Dragger>
                         </Form.Item>
                     </Form.Item>
                     <Form.Item >
-                        <Button type="primary" htmlType="submit" block onClick={handleSubmit}>ENVIAR</Button>
+                        <Button type="primary" htmlType="submit" block>ENVIAR</Button>
                     </Form.Item>
                 </Form>
             </Card>
@@ -808,14 +749,18 @@ function Component() {
                                 <CloseCircleOutlined key = "no" style={{ fontSize: '24px', color: '#1b4400' }}/>
                             </Col>
                             <Col className="gutter-row" span={8}>
-                                <CheckCircleOutlined  key = "no" style={{ fontSize: '24px', color: '#08c'}}/>
+                                    <CheckCircleOutlined  key = "no" style={{ fontSize: '24px', color: '#08c'}}/>
                             </Col>
                             <Col className="gutter-row" span={8}>
-                                <SearchOutlined key = "no" style={{ fontSize: '24px', color: '#d50000' }}/>
+                                    <SearchOutlined key = "no" style={{ fontSize: '24px', color: '#d50000' }}/>
                             </Col>
                         </Row>
+
                     </Card>
+
                     {emptyItems}
+
+
                 </Drawer>
             </div>
             {!data && <div className={style.loader}>

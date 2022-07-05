@@ -21,6 +21,9 @@ export const useStore = create<AppState>(set => ({
             if (name == 'admin' && password == 'admin') {
                 set((state) => ({username: 'Administrator', route: 'app'}))
             }
+            if (name == 'edit' && password == 'edit') {
+                set((state) => ({username: 'Editor', route: 'edit'}))
+            }
         //}, 1000)
     }
     //increasePopulation: () => set(state => ({ bears: state.bears + 1 })),
