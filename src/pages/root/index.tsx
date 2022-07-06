@@ -47,7 +47,7 @@ export default function App() {
                     <App3/>
                 </AuthProvider>
             }/>
-            <Route path="/Edit" element={
+            <Route path="/edit" element={
                 <AuthProvider>
                     <Edit/>
                 </AuthProvider>

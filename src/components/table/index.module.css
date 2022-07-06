@@ -45,3 +45,15 @@
 .component :global(.ant-table-tbody)> :global(.ant-table-row):hover > td {
     background: rgb(4, 173, 62);
 }
+
+.component th {
+    text-align: center !important;
+    background-color: #dcdcdc !important;
+    font-size: 0.9rem !important;
+    font-weight: 900 !important;
+    border: 2px solid white !important;
+}
+
+.component :global(.ant-select) {
+    margin-bottom: 10px !important;
+}

@@ -7,7 +7,7 @@ import {
     EllipsisOutlined,
     SettingOutlined,
     SearchOutlined,
-    CheckCircleOutlined, UploadOutlined, InboxOutlined
+    CheckCircleOutlined, UploadOutlined, InboxOutlined, DeleteOutlined
 } from '@ant-design/icons';
 import {Avatar, Card, Form, Input, Row, Upload, UploadProps} from 'antd';
 
@@ -193,11 +193,9 @@ function TreeCalc(node: any) {
         //return parseInt(node.enero2022)
     }
 }
-
 function UndefinedToZero (value: any) {
     return (value == undefined)?0:value;
 }
-
 function TransformJSON(node: any) {
     let results = []
     let x = 1 , y =1 , z =1, w = 1
@@ -214,14 +212,16 @@ function TransformJSON(node: any) {
                     //console.log('            '    + n4.nombre)
                     n3children.push({
                         key:           x + '.' + y + '.' + z + '.' + w,
-                        id:            n4.idactividad,
+                        id2022:            n4.listaActividadesMetas[0].idactividadperiodo,
+                        id2023:            n4.listaActividadesMetas[1].idactividadperiodo,
+                        id2024:            n4.listaActividadesMetas[2].idactividadperiodo,
                         indice:        x + '.' + y + '.' + z + '.' + w,
                         nombre:        n4.nombre,
                         responsable:   null,
                         um:            null,
                         meta:          UndefinedToZero(n4.listaActividadesMetas[0].totalmetafisica +
-                                       n4.listaActividadesMetas[1].totalmetafisica +
-                                       n4.listaActividadesMetas[2].totalmetafisica),
+                            n4.listaActividadesMetas[1].totalmetafisica +
+                            n4.listaActividadesMetas[2].totalmetafisica),
 
                         enero2022:     UndefinedToZero (n4.listaActividadesMetas[0].ene),
                         febrero2022:   UndefinedToZero (n4.listaActividadesMetas[0].feb),
@@ -314,7 +314,7 @@ function TransformJSON(node: any) {
                         noviembre2024: UndefinedToZero (n4.listaActividadesMetas[2].nov),
                         diciembre2024: UndefinedToZero (n4.listaActividadesMetas[2].dic),
 
-                        xenero2024:     UndefinedToZero (n4.listaActividadesMetas[2].enereg), 
+                        xenero2024:     UndefinedToZero (n4.listaActividadesMetas[2].enereg),
                         xfebrero2024:   UndefinedToZero (n4.listaActividadesMetas[2].febreg),
                         xmarzo2024:     UndefinedToZero (n4.listaActividadesMetas[2].marreg),
                         xabril2024:     UndefinedToZero (n4.listaActividadesMetas[2].abrreg),
@@ -352,9 +352,9 @@ function TransformJSON(node: any) {
                     responsable:   null,
                     um:            null,
                     meta:          UndefinedToZero (
-                                   n3.listaObjetivoMetaN3[0].totalmetafisica +
-                                   n3.listaObjetivoMetaN3[1].totalmetafisica +
-                                   n3.listaObjetivoMetaN3[2].totalmetafisica),
+                        n3.listaObjetivoMetaN3[0].totalmetafisica +
+                        n3.listaObjetivoMetaN3[1].totalmetafisica +
+                        n3.listaObjetivoMetaN3[2].totalmetafisica),
 
                     enero2022:     UndefinedToZero (n3.listaObjetivoMetaN3[0].ene),
                     febrero2022:   UndefinedToZero (n3.listaObjetivoMetaN3[0].feb),
@@ -448,9 +448,9 @@ function TransformJSON(node: any) {
                 responsable:   null,
                 um:            null,
                 meta:          UndefinedToZero (
-                               n2.listaObjetivoMetaN2[0].totalmetafisica +
-                               n2.listaObjetivoMetaN2[1].totalmetafisica +
-                               n2.listaObjetivoMetaN2[2].totalmetafisica),
+                    n2.listaObjetivoMetaN2[0].totalmetafisica +
+                    n2.listaObjetivoMetaN2[1].totalmetafisica +
+                    n2.listaObjetivoMetaN2[2].totalmetafisica),
 
                 enero2022:     UndefinedToZero (n2.listaObjetivoMetaN2[0].ene),
                 febrero2022:   UndefinedToZero (n2.listaObjetivoMetaN2[0].feb),
@@ -545,9 +545,9 @@ function TransformJSON(node: any) {
             responsable:   null,
             um:            null,
             meta:          UndefinedToZero (
-                           n1.listaObjetivoMetaN1[0].totalmetafisica +
-                           n1.listaObjetivoMetaN1[1].totalmetafisica +
-                           n1.listaObjetivoMetaN1[2].totalmetafisica),
+                n1.listaObjetivoMetaN1[0].totalmetafisica +
+                n1.listaObjetivoMetaN1[1].totalmetafisica +
+                n1.listaObjetivoMetaN1[2].totalmetafisica),
 
             enero2022:     UndefinedToZero (n1.listaObjetivoMetaN1[0].ene),
             febrero2022:   UndefinedToZero (n1.listaObjetivoMetaN1[0].feb),
@@ -629,7 +629,7 @@ function TransformJSON(node: any) {
             ppto2022:       UndefinedToZero (n1.listaObjetivoMetaN1[0].monto),
             ppto2023:       UndefinedToZero (n1.listaObjetivoMetaN1[1].monto),
             ppto2024:       UndefinedToZero (n1.listaObjetivoMetaN1[2].monto),
-            children:       n1children            
+            children:       n1children
         })
         y=1;
         z=1;
@@ -641,46 +641,113 @@ function TransformJSON(node: any) {
 
 function Component() {
     const [visible, setVisible] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [data, setData] = useState(null)
     const [cellData, setCellData] = useState<any>(null)
     const [files, setFiles] = useState<any>([]);
 
-
-    let db = new PouchDB('poi_database');
+    //let db = new PouchDB('poi_database');
+    const meses: { [key: string]: any } = {
+        'enero': 1,
+        'febrero': 2,
+        'marzo': 3,
+        'abril': 4,
+        'mayo': 5,
+        'junio': 6,
+        'julio': 7,
+        'agosto': 8,
+        'setiembre': 9,
+        'octubre': 10,
+        'noviembre': 11,
+        'diciembre': 12
+    }
 
     console.log('celldata')
     console.log(cellData)
 
-    useEffect(() => {
-
-        const readData = async () => {
-            let response = await axios.post(import.meta.env.VITE_BASE_ENDPOINT_URL  + 'listar-actividades', {
-                "dato":{
-                    "idusuarioResponsable":1
-                }
-            })
-            console.log('RESPONSE');
-            //console.log(TransformJSON(response.data.dato[0]))
-            // @ts-ignore
-            setData(TransformJSON(response?.data?.dato[0]))
-        }
-        readData()
-
+    const readData = async () => {
+        console.log('READDATA')
+        let response = await axios.post(import.meta.env.VITE_BASE_ENDPOINT_URL  + 'listar-actividades', {
+            "dato":{
+                "idusuarioResponsable":1
+            }
+        })
+        console.log('RESPONSE READDATA');
+        //console.log(TransformJSON(response.data.dato[0]))
         // @ts-ignore
-        //setData(NewData);
+        setData(TransformJSON(response?.data?.dato[0]))
+
+    }
+
+    useEffect(() => {
+        readData()
     }, [])
 
-    const showDrawer = (e: any, i: any, text: any) => {
-        console.log(e)
-        console.log(i)
-        setCellData({
-            title: e,
-            data: i,
-            text: text
-        })
+    useEffect(() => {
+        if (data) setLoading(false)
+    }, [data])
 
+    useEffect(() => {
+        setFiles([])
+    }, [visible])
+
+    const showDrawer = async (e: any, i: any, text: any) => {
         if (i.indice.split('.').length == 4) {
-            setVisible(true);
+            console.log(e)
+            const year = e.substring(e.length - 4, e.length)
+            const month = e.substring(0, e.length - 4)
+            console.log(i['id' + year])
+            // @ts-ignore
+            console.log(meses[month])
+            try {
+
+                const response = await axios.post(import.meta.env.VITE_BASE_ENDPOINT_URL + 'listar-acciones', {
+                    dato: {
+                        idactividadperiodo: i['id' + year],
+                        // @ts-ignore
+                        mes: meses[month],
+                    }
+                })
+                console.log(i)
+
+                if (response.data.dato.length) {
+
+                    setCellData({
+                        title: e,
+                        data: i,
+                        text: text,
+                        cards: response.data.dato
+                    })
+
+
+                    console.log('File Total: ' + response.data.dato.length)
+                    console.log('Text: ' + text)
+                    //
+                    // for await (let num of response.data.dato) {
+                    //     console.log('xxx')
+                    //     console.log(num)
+                    //     if (num.estado == 'Pendiente de Validación') {
+                    //         console.log("R3")
+                    //         let response3 = await axios.post(import.meta.env.VITE_BASE_ENDPOINT_URL + 'evaluar-accion', {
+                    //             "dato": {
+                    //                 "idactividadmetaaccion": num.idactividadmetaaccion,
+                    //                 "observacion": "",
+                    //                 "validado": 0,
+                    //                 "idusuarioreg": 1
+                    //             }
+                    //         })
+                    //         console.log(response3)
+                    //     }
+                    // }
+
+
+                    setVisible(true);
+                }
+
+            } catch
+                (e) {
+                console.log(e)
+            }
         }
     }
 
@@ -688,10 +755,84 @@ function Component() {
         setVisible(false);
     }
 
+    const handleApprove = async (card: any) => {
+        console.log('approve')
+        let response3 = await axios.post(import.meta.env.VITE_BASE_ENDPOINT_URL  + 'evaluar-accion', {
+            "dato":{
+                "idactividadmetaaccion": card.idactividadmetaaccion,
+                "observacion": "",
+                "validado": 1,
+                "idusuarioreg": 1
+            }
+        })
+        await readData()
+    }
+
+    const handleDenied = async (card: any) => {
+        console.log('approve')
+        let response3 = await axios.post(import.meta.env.VITE_BASE_ENDPOINT_URL  + 'evaluar-accion', {
+            "dato":{
+                "idactividadmetaaccion": card.idactividadmetaaccion,
+                "observacion": "Observado",
+                "validado": 0,
+                "idusuarioreg": 1
+            }
+        })
+        await readData()
+    }
+
+    const handleDeleted = async (card: any) => {
+        console.log('delete')
+        let response3 = await axios.post(import.meta.env.VITE_BASE_ENDPOINT_URL  + 'evaluar-accion', {
+            "dato":{
+                "idactividadmetaaccion": card.idactividadmetaaccion,
+                "observacion": "Eliminado",
+                "validado": 0,
+                "idusuarioreg": 1
+            }
+        })
+        await readData()
+    }
+
+    let cards = null
+    if (cellData?.cards) {
+        cards = cellData.cards.map((card: any) => {
+            if ((card.estado) != 'Aprobado') return null
+            return (
+                <Card
+                    style={{width: 330, marginBottom: '20px', textAlign: 'center', borderRadius: '8px'}}
+                    cover={
+                        <a href={card.archivopresentado} target="_blank">
+                            <img
+                                alt="example"
+                                src="assets/pdf.jpg"
+                                style={{width: '40%', margin: '0 auto', transform: 'rotate(6deg)', paddingTop: '30px'}}
+                            />
+                        </a>
+                    }
+                >
+                    {/*<div className={style.cardTitle}>{JSON.stringify(card)}</div>*/}
+                    <div className={style.cardTitle}>{card.accion}</div>
+                    <div className={style.cardSubTitle} style={{color: "red"}}>{card.observacion}</div>
+                    {(card.estado == 'Observado') &&
+                        <Row gutter={16} align="middle" justify="center" style={{marginTop: '30px'}}>
+                            <Button icon={<DeleteOutlined />} size="large" style={{backgroundColor: '#044f9a', color: 'white', margin: '10px'}} onClick={() => { handleDeleted(card)  }}></Button>
+                            {/*<Col className="gutter-row" span={8}>*/}
+                            <Button icon={<CloseCircleOutlined />} size="large" style={{backgroundColor: '#d50000', color: 'white', margin: '10px'}} onClick={() => { handleDenied(card)  }}></Button>
+                            {/*</Col>*/}
+                            {/*<Col className="gutter-row" span={8}>*/}
+                            <Button icon={<CheckCircleOutlined />}  size="large" style={{backgroundColor: '#005b10', color: 'white', margin: '10px'}} onClick={() => { handleApprove(card)  }}></Button>
+                            {/*</Col>*/}
+                        </Row>}
+                </Card>)
+        })
+    }
     // @ts-ignore
-    const dummyRequest = ({ file, onSuccess }, multiple: any, limit: any) => {
+    //const dummyRequest = ({ file, onSuccess }) =>
+    const dummyRequest = options => {
+        const { onSuccess, onError, file, onProgress } = options;
         console.log('dummyRequest')
-        const reader = new FileReader();
+        const reader = new FileReader()
         reader.onloadend = () => {
             setFiles(
                 [
@@ -709,15 +850,15 @@ function Component() {
         if (file) {
             reader.readAsDataURL(file);
         }
-        setTimeout(() => {
-            onSuccess("ok");
-        }, 0);
     };
 
     const handleSubmit = async () => {
         try {
             console.log('handleSubmit')
             console.log(files[0])
+            console.log('celldata')
+            console.log(cellData)
+
             let form = new FormData()
             form.append('codigoapp', '40')
             form.append('tag', '2')
@@ -726,13 +867,47 @@ function Component() {
                 headers: {'Content-Type': 'multipart/form-data'}
             })
             console.log(response)
+
+            const year   = cellData.title.substring(cellData.title.length - 4,  cellData.title.length)
+            // @ts-ignore
+            const month  = cellData.title.substring(0, cellData.title.length - 4)
             if (response.status == 200) {
-                const response2 = await axios.post(import.meta.env.VITE_VITE_BASE_ENDPOINT_URL + 'procesar-accion', {
+                // @ts-ignore
+                const response2 = await axios.post(import.meta.env.VITE_BASE_ENDPOINT_URL + 'procesar-accion', {
                     dato: {
-                        idactividadperiodo:
+                        idactividadperiodo: cellData.data['id' + year],
+                        mes: meses[month],
+                        archivo: response.data[0].url,
+                        accion: files[0].name,
+                        idusuarioreg: "1"
                     }
                 })
+                console.log("RESPONSE2")
+                console.log(response2)
+                // @ts-ignore
+                const response3 = await axios.post(import.meta.env.VITE_BASE_ENDPOINT_URL + 'listar-acciones', {
+                    dato: {
+                        idactividadperiodo: cellData.data['id' + year],
+                        mes: meses[month],
+                    }
+                })
+                for await (let num of response3.data.dato) {
+                    if (num.estado == 'Pendiente de Validación') {
+                        console.log('yyy')
+                        let response3 = await axios.post(import.meta.env.VITE_BASE_ENDPOINT_URL  + 'evaluar-accion', {
+                            "dato":{
+                                "idactividadmetaaccion": num.idactividadmetaaccion,
+                                "observacion": "",
+                                "validado": 0,
+                                "idusuarioreg": 1
+                            }
+                        })
+                        console.log(response3)
+                    }
+                }
             }
+            setLoading(true)
+            await readData()
         }
         catch (e) {
 
@@ -740,8 +915,12 @@ function Component() {
     }
 
     console.log(data)
-
     let emptyItems = []
+
+    const onSuccess = () => {
+        console.log('xyz')
+    }
+
 
     for (let i=0; i<1; i++) {
         // @ts-ignore
@@ -757,7 +936,7 @@ function Component() {
                         <Form.Item name="dragger" valuePropName="file"  noStyle>
                             <Upload
                                 //accept={accept}
-                                customRequest={(f) => dummyRequest(f, false, 1)}
+                                customRequest={dummyRequest}
                                 fileList={[]}
                             >
                                 <Button block={true} icon={<UploadOutlined />}>{files.length?files[0].name:'Subir archivo...'}</Button>
@@ -786,39 +965,10 @@ function Component() {
                 <Drawer placement="right" onClose={onClose} visible={visible} closeIcon={null}>
                     <div className={style.drawerTitle}>{cellData?.data?.nombre}</div>
                     <div className={style.drawerSubTitle}>{cellData?.title}</div>
-                    <Card
-                        style={{width: 330, marginBottom: '20px', textAlign: 'center', borderRadius: '8px'}}
-                        cover={
-                            <img
-                                alt="example"
-                                src="assets/pdf.jpg"
-                                style={{width: '40%', margin: '0 auto', transform: 'rotate(6deg)', paddingTop: '30px'}}
-                            />
-                        }
-                        // actions={[
-                        //     <CloseCircleOutlined key = "no" style={{height: '64px'}}/>,
-                        //     <CheckCircleOutlined key="ok"/>,
-                        //     <SearchOutlined key="obs"/>,
-                        // ]}
-                    >
-                        <div className={style.cardTitle}>Documento 1</div>
-                        <div className={style.cardSubTitle}>Este es un documento</div>
-                        <Row gutter={16} align="middle" justify="center" style={{marginTop: '30px'}} >
-                            <Col className="gutter-row" span={8} >
-                                <CloseCircleOutlined key = "no" style={{ fontSize: '24px', color: '#1b4400' }}/>
-                            </Col>
-                            <Col className="gutter-row" span={8}>
-                                <CheckCircleOutlined  key = "no" style={{ fontSize: '24px', color: '#08c'}}/>
-                            </Col>
-                            <Col className="gutter-row" span={8}>
-                                <SearchOutlined key = "no" style={{ fontSize: '24px', color: '#d50000' }}/>
-                            </Col>
-                        </Row>
-                    </Card>
-                    {emptyItems}
+                    {cards}
                 </Drawer>
             </div>
-            {!data && <div className={style.loader}>
+            {loading && <div className={style.loader}>
                 <Spin indicator={antIcon} />;
             </div>}
         </div>

@@ -112,7 +112,7 @@ function Component(props: any) {
                         { title: 'Junio', dataIndex: 'junio2022', key: 'junio2022', width: 50, render: (text: any, record: any)=> {
                                 let x = (record.xjunio2022 == "")?"0":record.xjunio2022
                                 let color = 'blue'
-                                if (x < record.junio2022) color = 'orange'
+                                if (x < record.junio2022) color = 'red'
                                 return (<div style={{width: '80px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick('junio2022', record, text)}}>
                                     <div style={{backgroundColor: color, color: 'white', padding: '5px', width: '80px', borderRadius: '4px'}}>{x}/{text}</div>
                                 </div>)
@@ -123,7 +123,15 @@ function Component(props: any) {
                     title: 'T3',
                     width: 100,
                     children: [
-                        { title: 'Julio', dataIndex: 'julio2022', key: 'julio2022', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick('julio2022', record, text)}}>{text}</div>) }},
+                        { title: 'Julio', dataIndex: 'julio2022', key: 'julio2022', width: 50, render: (text: any, record: any)=> {
+                                let x = (record.xjulio2022 == "")?"0":record.xjulio2022
+                                let color = 'blue'
+                                if (x < record.julio2022) color = 'red'
+                                if (x < record.julio2022) color = 'orange'
+                                return (<div style={{width: '80px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick('julio2022', record, text)}}>
+                                    <div style={{backgroundColor: color, color: 'white', padding: '5px', width: '80px', borderRadius: '4px'}}>{x}/{text}</div>
+                                </div>)
+                            }},
                         { title: 'Agosto', dataIndex: 'agosto2022', key: 'agosto2022', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick('agosto2022', record, text)}}>{text}</div>) }},
                         { title: 'Setiembre', dataIndex: 'setiembre2022', key: 'setiembre2022', width: 50, render: (text: any, record: any)=> { return (<div style={{width: '50px', textAlign: 'center'}} onClick={() => { cellClick('setiembre2022', record, text)}}>{text}</div>) }},
                     ]
@@ -302,8 +310,8 @@ function Component(props: any) {
             expandable={{
                 indentSize: 5,
                 columnWidth: '30px',
-                onExpand: (expanded, record) =>
-                    console.log("onExpand: ", record, expanded),
+                onExpand: (expanded, record) => {}
+                    //console.log("onExpand: ", record, expanded),
             }}
             //scroll={{ x: 1300 }}
         />
