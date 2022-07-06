@@ -20,6 +20,7 @@ import axios from 'axios'
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 import {UploadFile} from "antd/es/upload/interface";
+import {useStore} from '../../store';
 
 
 const antIcon = <LoadingOutlined style={{ fontSize: 64}} spin />;
@@ -646,6 +647,8 @@ function Component() {
     const [cellData, setCellData] = useState<any>(null)
     const [files, setFiles] = useState<any>([]);
 
+    const user = useStore(state => state.user)
+
     //let db = new PouchDB('poi_database');
     const meses: { [key: string]: any } = {
         'enero': 1,
@@ -669,7 +672,7 @@ function Component() {
         console.log('READDATA')
         let response = await axios.post(import.meta.env.VITE_BASE_ENDPOINT_URL  + 'listar-actividades', {
             "dato":{
-                "idusuarioResponsable":1
+                "idusuarioResponsable": user
             }
         })
         console.log('RESPONSE READDATA');
@@ -969,7 +972,7 @@ function Component() {
                 </Drawer>
             </div>
             {loading && <div className={style.loader}>
-                <Spin indicator={antIcon} />;
+                <Spin indicator={antIcon} />
             </div>}
         </div>
     )

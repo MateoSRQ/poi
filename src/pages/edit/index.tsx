@@ -20,6 +20,7 @@ import axios from 'axios'
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 import {UploadFile} from "antd/es/upload/interface";
+import {useStore} from "../../store";
 
 
 const antIcon = <LoadingOutlined style={{ fontSize: 64}} spin />;
@@ -645,6 +646,9 @@ function Component() {
     const [data, setData] = useState(null)
     const [cellData, setCellData] = useState<any>(null)
     const [files, setFiles] = useState<any>([]);
+    const user = useStore(state => state.user)
+
+    const [comment, setComment] = useState('')
 
     //let db = new PouchDB('poi_database');
     const meses: { [key: string]: any } = {
@@ -669,7 +673,7 @@ function Component() {
         console.log('READDATA')
         let response = await axios.post(import.meta.env.VITE_BASE_ENDPOINT_URL  + 'listar-actividades', {
             "dato":{
-                "idusuarioResponsable":1
+                "idusuarioResponsable": user
             }
         })
         console.log('RESPONSE READDATA');
@@ -684,6 +688,7 @@ function Component() {
     }, [])
 
     useEffect(() => {
+        setVisible(false)
         if (data) setLoading(false)
     }, [data])
 
@@ -790,6 +795,11 @@ function Component() {
         await readData()
     }
 
+    const commentChange = (e: any) => {
+        console.log(e)
+        setComment(e.target.value)
+    }
+
     let cards = null
     if (cellData?.cards) {
         cards = cellData.cards.map((card: any) => {
@@ -810,15 +820,20 @@ function Component() {
                     <div className={style.cardTitle}>{card.accion}</div>
                     <div className={style.cardSubTitle} style={{color: "red"}}>{card.observacion}</div>
                     {(card.estado == 'Observado') &&
-                    <Row gutter={16} align="middle" justify="center" style={{marginTop: '30px'}}>
-                            <Button icon={<DeleteOutlined />} size="large" style={{backgroundColor: '#044f9a', color: 'white', margin: '10px'}} onClick={() => { handleDeleted(card)  }}></Button>
-                        {/*<Col className="gutter-row" span={8}>*/}
-                            <Button icon={<CloseCircleOutlined />} size="large" style={{backgroundColor: '#d50000', color: 'white', margin: '10px'}} onClick={() => { handleDenied(card)  }}></Button>
-                        {/*</Col>*/}
-                        {/*<Col className="gutter-row" span={8}>*/}
-                            <Button icon={<CheckCircleOutlined />}  size="large" style={{backgroundColor: '#005b10', color: 'white', margin: '10px'}} onClick={() => { handleApprove(card)  }}></Button>
-                        {/*</Col>*/}
-                    </Row>}
+                        <>
+                            <Row gutter={16} align="middle" justify="center" style={{marginTop: '30px'}}>
+                                <Input value={comment}  onChange={commentChange} placeholder="Comentario..." />
+                            </Row>
+                            <Row gutter={16} align="middle" justify="center" style={{marginTop: '30px'}}>
+                                    <Button icon={<DeleteOutlined />} size="large" style={{backgroundColor: '#044f9a', color: 'white', margin: '10px'}} onClick={() => { handleDeleted(card)  }}></Button>
+                                {/*<Col className="gutter-row" span={8}>*/}
+                                    <Button icon={<CloseCircleOutlined />} size="large" style={{backgroundColor: '#d50000', color: 'white', margin: '10px'}} onClick={() => { handleDenied(card)  }}></Button>
+                                {/*</Col>*/}
+                                {/*<Col className="gutter-row" span={8}>*/}
+                                    <Button icon={<CheckCircleOutlined />}  size="large" style={{backgroundColor: '#005b10', color: 'white', margin: '10px'}} onClick={() => { handleApprove(card)  }}></Button>
+                                {/*</Col>*/}
+                            </Row>
+                        </>}
                 </Card>)
         })
     }
@@ -917,8 +932,14 @@ function Component() {
         console.log('xyz')
     }
 
+    console.log('APROBADOS')
+    let len = cellData?.cards?.filter((card: any) => card.estado == 'Aprobado').length
 
-    for (let i=0; i<1; i++) {
+    console.log(len)
+
+
+    if  (cellData?.cards?.filter((card: any) => card.estado == 'Aprobado').length != cellData?.text) {
+    //if  (true) {
         // @ts-ignore
         emptyItems.push(
             <Card
@@ -935,7 +956,7 @@ function Component() {
                                 customRequest={dummyRequest}
                                 fileList={[]}
                             >
-                                <Button block={true} icon={<UploadOutlined />}>{files.length?files[0].name:'Subir archivo...'}</Button>
+                                <Button style={{width: '100%'}} icon={<UploadOutlined />}>{files.length?files[0].name:'Subir archivo...'}</Button>
                             </Upload>
                         </Form.Item>
                     </Form.Item>

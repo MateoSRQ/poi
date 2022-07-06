@@ -58,8 +58,8 @@ function Component(props: any) {
                             let x = (record.xenero2022 == "")?"0":record.xenero2022
                             let o = (record.oenero2022 == "")?"0":record.oenero2022
                             let color = 'blue'
-                            if (o >= 0 && (x-text) != 0) color = '#0f930f'
                             if (x < record.enero2022) color = 'red'
+                                if (o > 0 ) color = '#0f930f'
                                 return (<div style={{width: '80px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick('enero2022', record, text)}}>
                                     <div style={{backgroundColor: color, color: 'white', padding: '5px', width: '80px', borderRadius: '4px'}}>{x}/{text}</div>
                                 </div>)
@@ -68,8 +68,9 @@ function Component(props: any) {
                                 let x = (record.xfebrero2022 == "")?"0":record.xfebrero2022
                                 let o = (record.ofebrero2022 == "")?"0":record.ofebrero2022
                                 let color = 'blue'
-                                if (o >= 0 && (x-text) != 0) color = '#0f930f'
                                 if (x < record.febrero2022) color = 'red'
+                                if (o > 0 ) color = '#0f930f'
+
                                 return (<div style={{width: '80px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick('febrero2022', record, text)}}>
                                     <div style={{backgroundColor: color, color: 'white', padding: '5px', width: '80px', borderRadius: '4px'}}>{x}/{text}</div>
                                 </div>)
@@ -78,8 +79,8 @@ function Component(props: any) {
                                 let x = (record.xmarzo2022 == "") ? "0" : record.xmarzo2022
                                 let o = (record.omarzo2022 == "") ? "0" : record.omarzo2022
                                 let color = 'blue'
-                                if (o >= 0 && (x-text) != 0) color = '#0f930f'
                                 if (x < record.marzo2022) color = 'red'
+                                if (o > 0 ) color = '#0f930f'
                                 return (
                                     <div style={{width: '80px', textAlign: 'center', color: 'white'}} onClick={() => {
                                         cellClick('marzo2022', record, text)
@@ -103,8 +104,8 @@ function Component(props: any) {
                                 let x = (record.xabril2022 == "")?"0":record.xabril2022
                                 let o = (record.oabril2022 == "")?"0":record.oabril2022
                                 let color = 'blue'
-                                if (o >= 0 && (x-text) != 0) color = '#0f930f'
                                 if (x < record.abril2022) color = 'red'
+                                if (o > 0 ) color = '#0f930f'
                                 return (<div style={{width: '80px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick('abril2022', record, text)}}>
                                     <div style={{backgroundColor: color, color: 'white', padding: '5px', width: '80px', borderRadius: '4px'}}>{x}/{text}</div>
                                 </div>)
@@ -113,18 +114,18 @@ function Component(props: any) {
                                 let x = (record.xmayo2022 == "")?"0":record.xmayo2022
                                 let o = (record.omayo2022 == "")?"0":record.omayo2022
                                 let color = 'blue'
-                                if (o >= 0 && (x-text) != 0) color = '#0f930f'
                                 if (x < record.mayo2022) color = 'red'
+                                if (o > 0 ) color = '#0f930f'
                                 return (<div style={{width: '80px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick('mayo2022', record, text)}}>
                                     <div style={{backgroundColor: color, color: 'white', padding: '5px', width: '80px', borderRadius: '4px'}}>{x}/{text}</div>
                                 </div>)
                             }},
                         { title: 'Junio', dataIndex: 'junio2022', key: 'junio2022', width: 50, render: (text: any, record: any)=> {
                                 let x = (record.xjunio2022 == "")?"0":record.xjunio2022
-                                let o= (record.ojunio2022 == "")?"0":record.xjunio2022
+                                let o = (record.ojunio2022 == "")?"0":record.ojunio2022
                                 let color = 'blue'
-                                if (o >= 0 && (x-text) != 0) color = '#0f930f'
                                 if (x < record.mayo2022) color = 'red'
+                                if (o > 0 ) color = '#0f930f'
                                 return (<div style={{width: '80px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick('junio2022', record, text)}}>
                                     <div style={{backgroundColor: color, color: 'white', padding: '5px', width: '80px', borderRadius: '4px'}}>{x}/{text}</div>
                                 </div>)
@@ -140,7 +141,7 @@ function Component(props: any) {
                             let o = (record.ojulio2022 == "")?"0":record.ojulio2022
                             let color = 'blue'
                             if (x < record.julio2022) color = 'orange'
-                                if (o >= 0 && (x-text) != 0) color = '#0f930f'
+                                if (o > 0 ) color = '#0f930f'
                                 return (<div style={{width: '80px', textAlign: 'center', color: 'white'}} onClick={() => { cellClick('julio2022', record, text)}}>
                                     <div style={{backgroundColor: color, color: 'white', padding: '5px', width: '80px', borderRadius: '4px'}}>{x}/{text}</div>
                                 </div>)
