@@ -20,13 +20,13 @@ function Component(props: any) {
 
     const Columns = {
         ID: {
-            id: 'ID', dataIndex: 'id', key: 'id', width: 100, render: (text: any, record: any) => {
+            fixed: 'left', id: 'ID', dataIndex: 'id', key: 'id', width: 100, render: (text: any, record: any) => {
                 return (<div style={{width: '40px'}}>{text}</div>)
             }
         },
-        'Índice': { title: 'Índice', dataIndex: 'indice', key: 'indice', width: 100 },
+        'Índice': { fixed: 'left', title: 'Índice', dataIndex: 'indice', key: 'indice', width: 100 },
         Nombre: {
-            title: 'Nombre', dataIndex: 'nombre', key: 'nombre', width: 500, render: (text: any, record: any) => {
+            fixed: 'left', title: 'Nombre', dataIndex: 'nombre', key: 'nombre', width: 500, render: (text: any, record: any) => {
                 return (
                     <div style={{width: '650px'}}>
                         <div>{text.split(':')[0]}</div>
@@ -329,6 +329,7 @@ function Component(props: any) {
                 onExpand: (expanded, record) =>
                     console.log("onExpand: ", record, expanded),
             }}
+            //scroll={{ x: 0, y: 0 }}
             //scroll={{ x: 1300 }}
         />
     </div>
