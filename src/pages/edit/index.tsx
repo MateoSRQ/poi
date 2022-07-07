@@ -212,7 +212,7 @@ function TransformJSON(node: any) {
                 for (let n4 of n3.listaActividades) {
                     //console.log('            '    + n4.nombre)
                     n3children.push({
-                        key:          Math.random(),
+                        //key:          Math.random(),
                         id2022:       n4.listaActividadesMetas[0].idactividadperiodo,
                         id2023:       n4.listaActividadesMetas[1].idactividadperiodo,
                         id2024:       n4.listaActividadesMetas[2].idactividadperiodo,
@@ -443,7 +443,7 @@ function TransformJSON(node: any) {
                 z++;
             }
             n1children.push({
-                key:          Math.random(),
+                //key:          Math.random(),
                 indice:        x + '.' + y,
                 nombre:        n2.objetivo,
                 responsable:   null,
@@ -540,7 +540,7 @@ function TransformJSON(node: any) {
             y++;
         }
         results.push({
-            key:          Math.random(),
+            //key:          Math.random(),
             indice:        x,
             nombre:        n1.objetivo,
             responsable:   null,
@@ -647,6 +647,9 @@ function Component() {
     const [cellData, setCellData] = useState<any>(null)
     const [files, setFiles] = useState<any>([]);
     const user = useStore(state => state.user)
+
+    const username = useStore(state => state.username)
+    const logout = useStore(state => state.logout)
 
     const [comment, setComment] = useState('')
 
@@ -1016,6 +1019,7 @@ function Component() {
             <div className={style.logo}>
                 <img src="assets/logo.png" style={{height: '100%'}}/>
             </div>
+            <Button style={{position: 'absolute', right: '275px', top: '35px'}} onClick={() => {logout()}}>Salir de sesión de {username}</Button>
             <div className={style.container}>
                 <Table handleCellClick={showDrawer} data={data}/>
                 <Drawer placement="right" onClose={onClose} visible={visible} closeIcon={null}>

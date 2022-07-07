@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import {Key, useEffect, useState} from 'react'
 import logo from './logo.svg'
 import style from './index.module.css'
 import { Table } from 'antd';
@@ -17,6 +17,11 @@ function Component(props: any) {
     }
     const [columns, setColumns] = useState([])
     const [selected, setSelected] = useState(['ID', 'Nombre', '2022'])
+    const [expandedRow, setExpandedRow] = useState<Key>(0);
+    const [currentRow, setCurrentRow] = useState([]);
+
+    console.log('EXPANDED ROW    ')
+    console.log(expandedRow)
 
     const Columns = {
         ID: {
@@ -305,6 +310,9 @@ function Component(props: any) {
     console.log('columns')
     console.log(columns)
 
+    // @ts-ignore
+    // @ts-ignore
+    // @ts-ignore
     return (
 
     <div className={style.component}>
@@ -326,13 +334,20 @@ function Component(props: any) {
             columns={columns}
             dataSource={props.data}
             pagination={false}
+            rowKey='indice'
             expandable={{
+
                 indentSize: 5,
                 // fixed: "right",
                 columnWidth: '40px',
-                onExpand: (expanded, record) =>
-                console.log("onExpand: ", record, expanded),
-            }}
+
+                onExpand: (expanded, record) => {
+                    console.log("onExpand: ", record, expanded)
+                    setExpandedRow(expanded ? record.key : undefined)
+
+                },
+                defaultExpandedRowKeys: [expandedRow]
+             }}
             //scroll={{ x: 0, y: 0 }}
             //scroll={{ x: 1300 }}
         />

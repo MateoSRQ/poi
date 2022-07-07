@@ -649,7 +649,11 @@ function Component() {
     const [cellData, setCellData] = useState<any>(null)
     const [files, setFiles] = useState<any>([]);
     const [comment, setComment] = useState('')
+
     const user = useStore(state => state.user)
+    const username = useStore(state => state.username)
+    const logout = useStore(state => state.logout)
+
 
     //let db = new PouchDB('poi_database');
     const meses: { [key: string]: any } = {
@@ -1005,6 +1009,7 @@ function Component() {
             <div className={style.logo}>
                 <img src="assets/logo.png" style={{height: '100%'}}/>
             </div>
+            <Button style={{position: 'absolute', right: '275px', top: '35px'}} onClick={() => {logout()}}>Salir de sesión de {username}</Button>
             <div className={style.container}>
                 <Table handleCellClick={showDrawer} data={data}/>
                 <Drawer placement="right" onClose={onClose} visible={visible} closeIcon={null}>
