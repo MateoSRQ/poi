@@ -12,6 +12,7 @@ import App2 from "../app2";
 import App1 from "../app1";
 import App3 from "../app";
 import Edit from "../edit";
+import Upload from "../upload";
 import Login from "../login";
 import provider from "../../components/authprovider"
 import {useStore} from '../../store';
@@ -50,6 +51,11 @@ export default function App() {
             <Route path="/edit" element={
                 <AuthProvider>
                     <Edit/>
+                </AuthProvider>
+            }/>
+            <Route path="/upload" element={
+                <AuthProvider>
+                    <Upload/>
                 </AuthProvider>
             }/>
             <Route path="*" element={<Login/>}/>

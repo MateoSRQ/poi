@@ -9,7 +9,7 @@ import {
     SearchOutlined,
     CheckCircleOutlined, UploadOutlined, InboxOutlined, DeleteOutlined
 } from '@ant-design/icons';
-import {Avatar, Card, Form, Input, Row, Upload, UploadProps} from 'antd';
+import {Avatar, Card, Form, Input, Row, Upload, UploadProps,} from 'antd';
 
 import Table from '../../components/tableedit'
 import {Button, Drawer, Col} from 'antd';
@@ -21,7 +21,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 import {UploadFile} from "antd/es/upload/interface";
 import {useStore} from "../../store";
-
+const { TextArea } = Input;
 
 const antIcon = <LoadingOutlined style={{ fontSize: 64}} spin />;
 const {Meta} = Card;
@@ -219,7 +219,7 @@ function TransformJSON(node: any) {
                         indice:        x + '.' + y + '.' + z + '.' + w,
                         nombre:        n4.nombre,
                         responsable:   null,
-                        um:            null,
+                        um:            n4.unidadmedida,
                         meta:          UndefinedToZero(n4.listaActividadesMetas[0].totalmetafisica +
                             n4.listaActividadesMetas[1].totalmetafisica +
                             n4.listaActividadesMetas[2].totalmetafisica),
@@ -770,11 +770,11 @@ function Component() {
     }
 
     const handleDenied = async (card: any) => {
-        console.log('approve')
+        console.log('denied')
         let response3 = await axios.post(import.meta.env.VITE_BASE_ENDPOINT_URL  + 'evaluar-accion', {
             "dato":{
                 "idactividadmetaaccion": card.idactividadmetaaccion,
-                "observacion": "Observado",
+                "observacion": comment,
                 "validado": 0,
                 "idusuarioreg": 1
             }
@@ -803,6 +803,7 @@ function Component() {
     let cards = null
     if (cellData?.cards) {
         cards = cellData.cards.map((card: any) => {
+            if (card.archivopresentado) {
             return (
                 <Card
                     style={{width: 330, marginBottom: '20px', textAlign: 'center', borderRadius: '8px'}}
@@ -835,6 +836,32 @@ function Component() {
                             </Row>
                         </>}
                 </Card>)
+            }
+            else {
+                return (
+                    <Card
+                        style={{width: 330, marginBottom: '20px', textAlign: 'center', borderRadius: '8px', backgroundColor: '#ffffff'}}
+                    >
+                        {/*<div className={style.cardTitle}>{JSON.stringify(card)}</div>*/}
+                        <div className={style.cardTitle} style={{outline: '1px solid #fefefe', padding: '10px', backgroundColor: '#FFA600FF', textAlign: 'left', fontSize: '12px', transform: 'rotate(-.3deg)', minHeight: '200px', color: 'black' }}>{card.accion}</div>
+                        <div className={style.cardSubTitle} style={{color: "red"}}>{card.observacion}</div>
+                        {(card.estado == 'Observado') &&
+                            <>
+                                <Row gutter={16} align="middle" justify="center" style={{marginTop: '30px'}}>
+                                    <Input value={comment}  onChange={commentChange} placeholder="Comentario..." />
+                                </Row>
+                                <Row gutter={16} align="middle" justify="center" style={{marginTop: '30px'}}>
+                                    <Button icon={<DeleteOutlined />} size="large" style={{backgroundColor: '#044f9a', color: 'white', margin: '10px'}} onClick={() => { handleDeleted(card)  }}></Button>
+                                    {/*<Col className="gutter-row" span={8}>*/}
+                                    <Button icon={<CloseCircleOutlined />} size="large" style={{backgroundColor: '#d50000', color: 'white', margin: '10px'}} onClick={() => { handleDenied(card)  }}></Button>
+                                    {/*</Col>*/}
+                                    {/*<Col className="gutter-row" span={8}>*/}
+                                    <Button icon={<CheckCircleOutlined />}  size="large" style={{backgroundColor: '#005b10', color: 'white', margin: '10px'}} onClick={() => { handleApprove(card)  }}></Button>
+                                    {/*</Col>*/}
+                                </Row>
+                            </>}
+                    </Card>)
+            }
         })
     }
     // @ts-ignore
@@ -862,17 +889,20 @@ function Component() {
         }
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (values: any) => {
         try {
+
             console.log('handleSubmit')
             console.log(files[0])
             console.log('celldata')
             console.log(cellData)
+            console.log('values')
+            console.log(values)
 
             let form = new FormData()
             form.append('codigoapp', '40')
             form.append('tag', '2')
-            form.append('archivos', files[0].file)
+            form.append('archivos', (files[0] != undefined)? files[0].file : null)
             const response = await axios.post(import.meta.env.VITE_UPLOAD_URL, form, {
                 headers: {'Content-Type': 'multipart/form-data'}
             })
@@ -887,8 +917,8 @@ function Component() {
                     dato: {
                         idactividadperiodo: cellData.data['id' + year],
                         mes: meses[month],
-                        archivo: response.data[0].url,
-                        accion: files[0].name,
+                        archivo: (response.data[0] != undefined)? response.data[0].url : null,
+                        accion: values.comment || files[0].name,
                         idusuarioreg: "1"
                     }
                 })
@@ -920,7 +950,7 @@ function Component() {
             await readData()
         }
         catch (e) {
-
+            console.log(e)
         }
     }
 
@@ -935,11 +965,11 @@ function Component() {
     console.log('APROBADOS')
     let len = cellData?.cards?.filter((card: any) => card.estado == 'Aprobado').length
 
-    console.log(len)
 
+    const [form] = Form.useForm()
 
-    if  (cellData?.cards?.filter((card: any) => card.estado == 'Aprobado').length != cellData?.text) {
-    //if  (true) {
+    if (cellData?.cards?.filter((card: any) => card.estado == 'Aprobado').length != cellData?.text) {
+        //if  (true) {
         // @ts-ignore
         emptyItems.push(
             <Card
@@ -948,20 +978,29 @@ function Component() {
             >
                 <Form
                     layout='vertical'
+                    form={form}
+                    onFinish={handleSubmit}
                 >
-                    <Form.Item>
-                        <Form.Item name="dragger" valuePropName="file"  noStyle>
-                            <Upload
-                                //accept={accept}
-                                customRequest={dummyRequest}
-                                fileList={[]}
-                            >
-                                <Button style={{width: '100%'}} icon={<UploadOutlined />}>{files.length?files[0].name:'Subir archivo...'}</Button>
-                            </Upload>
-                        </Form.Item>
+                    <Form.Item name="comment">
+                        <TextArea
+                            autoSize={{minRows: 2, maxRows: 6}}
+                            name="comment"
+                        />
                     </Form.Item>
-                    <Form.Item >
-                        <Button type="primary" htmlType="submit" block onClick={handleSubmit}>ENVIAR</Button>
+                    <Form.Item>
+                    <Form.Item name="dragger" valuePropName="file" noStyle>
+                        <Upload
+                            //accept={accept}
+                            customRequest={dummyRequest}
+                            fileList={[]}
+                        >
+                            <Button style={{width: '100%'}} icon={
+                                <UploadOutlined/>}>{files.length ? files[0].name : 'Subir archivo...'}</Button>
+                        </Upload>
+                    </Form.Item>
+                    </Form.Item>
+                    <Form.Item>
+                        <Button type="primary" htmlType="submit" block >ENVIAR</Button>
                     </Form.Item>
                 </Form>
             </Card>

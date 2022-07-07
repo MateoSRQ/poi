@@ -20,13 +20,16 @@ function Component(props: any) {
 
     const Columns = {
         ID: {
-            fixed: 'left', id: 'ID', dataIndex: 'id', key: 'id', width: 100, render: (text: any, record: any) => {
+            id: 'ID', dataIndex: 'id', key: 'id', width: 40, render: (text: any, record: any) => {
                 return (<div style={{width: '40px'}}>{text}</div>)
             }
         },
-        'Índice': { fixed: 'left', title: 'Índice', dataIndex: 'indice', key: 'indice', width: 100 },
+        'Índice': { title: 'Índice', dataIndex: 'indice', key: 'indice', width: 100 , render: (text: any, record: any) => {
+                return (<div style={{width: '100px'}}>{text}</div>)
+            }
+        },
         Nombre: {
-            fixed: 'left', title: 'Nombre', dataIndex: 'nombre', key: 'nombre', width: 500, render: (text: any, record: any) => {
+             title: 'Nombre', dataIndex: 'nombre', key: 'nombre', width: 650, render: (text: any, record: any) => {
                 return (
                     <div style={{width: '650px'}}>
                         <div>{text.split(':')[0]}</div>
@@ -325,9 +328,10 @@ function Component(props: any) {
             pagination={false}
             expandable={{
                 indentSize: 5,
-                columnWidth: '30px',
+                // fixed: "right",
+                columnWidth: '40px',
                 onExpand: (expanded, record) =>
-                    console.log("onExpand: ", record, expanded),
+                console.log("onExpand: ", record, expanded),
             }}
             //scroll={{ x: 0, y: 0 }}
             //scroll={{ x: 1300 }}

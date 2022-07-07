@@ -50,9 +50,18 @@ export default function Component() {
                     <Form.Item label="Contraseña" name="password">
                         <Input.Password placeholder="" />
                     </Form.Item>
+                    <Form.Item>
+                        <div style={{textAlign: 'center', 'fontSize': '10px', lineHeight: '10px' }}>
+                            <p>admin / admin</p>
+                            <p>adminTI / adminTI</p>
+                            <p>loadTI / loadTI</p>
+                            <p>editTI / editTI</p>
+                        </div>
+                    </Form.Item>
                     <Form.Item >
                         <Button type="primary" htmlType="submit" block>Ingresar</Button>
                     </Form.Item>
+
                 </Form>
             </div>
         </div>

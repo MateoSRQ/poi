@@ -33,8 +33,8 @@ export const useStore = create<AppState>(set => ({
             console.log('XXXXXXXXXXXXXXXXXXXEDITT')
             set((state) => ({username: 'Editor', route: 'edit', user: '2'}))
         }
-        if (name == 'aprTI' && password == 'aprTI') {
-            set((state) => ({username: 'Editor', route: 'edit', user: '2'}))
+        if (name == 'loadTI' && password == 'loadTI') {
+            set((state) => ({username: 'Editor', route: 'upload', user: '2'}))
         }
 
     }

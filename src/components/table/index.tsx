@@ -309,6 +309,7 @@ function Component(props: any) {
             pagination={false}
             expandable={{
                 indentSize: 5,
+                //fixed: 'left',
                 columnWidth: '30px',
                 onExpand: (expanded, record) => {}
                     //console.log("onExpand: ", record, expanded),

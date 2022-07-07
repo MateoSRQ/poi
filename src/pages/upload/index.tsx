@@ -9,9 +9,9 @@ import {
     SearchOutlined,
     CheckCircleOutlined, UploadOutlined, InboxOutlined, DeleteOutlined
 } from '@ant-design/icons';
-import {Avatar, Card, Form, Input, Row, Upload, UploadProps} from 'antd';
+import {Avatar, Card, Form, Input, Row, Upload, UploadProps,} from 'antd';
 
-import Table from '../../components/table'
+import Table from '../../components/tableedit'
 import {Button, Drawer, Col} from 'antd';
 import PouchDB from 'pouchdb';
 import 'antd/dist/antd.css'
@@ -20,13 +20,11 @@ import axios from 'axios'
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 import {UploadFile} from "antd/es/upload/interface";
-import {useStore} from '../../store';
-
-
+import {useStore} from "../../store";
+const { TextArea } = Input;
 
 const antIcon = <LoadingOutlined style={{ fontSize: 64}} spin />;
 const {Meta} = Card;
-const { TextArea } = Input;
 
 function TreeCalc(node: any) {
 
@@ -214,10 +212,10 @@ function TransformJSON(node: any) {
                 for (let n4 of n3.listaActividades) {
                     //console.log('            '    + n4.nombre)
                     n3children.push({
-                        key:           x + '.' + y + '.' + z + '.' + w,
-                        id2022:            n4.listaActividadesMetas[0].idactividadperiodo,
-                        id2023:            n4.listaActividadesMetas[1].idactividadperiodo,
-                        id2024:            n4.listaActividadesMetas[2].idactividadperiodo,
+                        key:          Math.random(),
+                        id2022:       n4.listaActividadesMetas[0].idactividadperiodo,
+                        id2023:       n4.listaActividadesMetas[1].idactividadperiodo,
+                        id2024:       n4.listaActividadesMetas[2].idactividadperiodo,
                         indice:        x + '.' + y + '.' + z + '.' + w,
                         nombre:        n4.nombre,
                         responsable:   null,
@@ -349,7 +347,7 @@ function TransformJSON(node: any) {
                     w++;
                 }
                 n2children.push({
-                    key:           x + '.' + y + '.' + z,
+                    key:          Math.random(),
                     indice:        x + '.' + y + '.' + z,
                     nombre:        n3.objetivo,
                     responsable:   null,
@@ -445,7 +443,7 @@ function TransformJSON(node: any) {
                 z++;
             }
             n1children.push({
-                key:           x + '.' + y,
+                key:          Math.random(),
                 indice:        x + '.' + y,
                 nombre:        n2.objetivo,
                 responsable:   null,
@@ -542,7 +540,7 @@ function TransformJSON(node: any) {
             y++;
         }
         results.push({
-            key:           x,
+            key:          Math.random(),
             indice:        x,
             nombre:        n1.objetivo,
             responsable:   null,
@@ -648,8 +646,9 @@ function Component() {
     const [data, setData] = useState(null)
     const [cellData, setCellData] = useState<any>(null)
     const [files, setFiles] = useState<any>([]);
-    const [comment, setComment] = useState('')
     const user = useStore(state => state.user)
+
+    const [comment, setComment] = useState('')
 
     //let db = new PouchDB('poi_database');
     const meses: { [key: string]: any } = {
@@ -666,6 +665,9 @@ function Component() {
         'noviembre': 11,
         'diciembre': 12
     }
+
+    console.log('celldata')
+    console.log(cellData)
 
     const readData = async () => {
         console.log('READDATA')
@@ -686,6 +688,7 @@ function Component() {
     }, [])
 
     useEffect(() => {
+        setVisible(false)
         if (data) setLoading(false)
     }, [data])
 
@@ -696,13 +699,13 @@ function Component() {
     const showDrawer = async (e: any, i: any, text: any) => {
         if (i.indice.split('.').length == 4) {
             console.log(e)
-            console.log(e)
             const year = e.substring(e.length - 4, e.length)
             const month = e.substring(0, e.length - 4)
             console.log(i['id' + year])
             // @ts-ignore
             console.log(meses[month])
             try {
+
                 const response = await axios.post(import.meta.env.VITE_BASE_ENDPOINT_URL + 'listar-acciones', {
                     dato: {
                         idactividadperiodo: i['id' + year],
@@ -710,37 +713,37 @@ function Component() {
                         mes: meses[month],
                     }
                 })
-                if (response.data.dato.filter((file: any) => {  console.log(file); return (file.estado == 'Aprobado')}).length) {
-                    setCellData({
-                        title: e,
-                        data: i,
-                        text: text,
-                        cards: response.data.dato
-                    })
+                console.log(i)
+                setCellData({
+                    title: e,
+                    data: i,
+                    text: text,
+                    cards: response.data.dato
+                })
 
 
-                    console.log('File Total: ' + response.data.dato.length)
-                    console.log('Text: ' + text)
-                    console.log(response.data.dato)
-                    //
-                    // for await (let num of response.data.dato) {
-                    //     console.log('xxx')
-                    //     console.log(num)
-                    //     if (num.estado == 'Pendiente de Validación') {
-                    //         console.log("R3")
-                    //         let response3 = await axios.post(import.meta.env.VITE_BASE_ENDPOINT_URL + 'evaluar-accion', {
-                    //             "dato": {
-                    //                 "idactividadmetaaccion": num.idactividadmetaaccion,
-                    //                 "observacion": "",
-                    //                 "validado": 0,
-                    //                 "idusuarioreg": 1
-                    //             }
-                    //         })
-                    //         console.log(response3)
-                    //     }
-                    // }
-                    setVisible(true);
-                }
+                console.log('File Total: ' + response.data.dato.length)
+                console.log('Text: ' + text)
+
+                // for await (let num of response.data.dato) {
+                //     console.log('xxx')
+                //     console.log(num)
+                //     if (num.estado == 'Pendiente de Validación') {
+                //         console.log("R3")
+                //         let response3 = await axios.post(import.meta.env.VITE_BASE_ENDPOINT_URL  + 'evaluar-accion', {
+                //             "dato":{
+                //                 "idactividadmetaaccion": num.idactividadmetaaccion,
+                //                 "observacion": "",
+                //                 "validado": 0,
+                //                 "idusuarioreg": 1
+                //             }
+                //         })
+                //         console.log(response3)
+                //     }
+                // }
+
+
+                setVisible(true);
 
             } catch
                 (e) {
@@ -800,40 +803,39 @@ function Component() {
     let cards = null
     if (cellData?.cards) {
         cards = cellData.cards.map((card: any) => {
-            if ((card.estado) != 'Aprobado') return null
             if (card.archivopresentado) {
-                return (
-                    <Card
-                        style={{width: 330, marginBottom: '20px', textAlign: 'center', borderRadius: '8px'}}
-                        cover={
-                            <a href={card.archivopresentado} target="_blank">
-                                <img
-                                    alt="example"
-                                    src="assets/pdf.jpg"
-                                    style={{width: '40%', margin: '0 auto', transform: 'rotate(6deg)', paddingTop: '30px'}}
-                                />
-                            </a>
-                        }
-                    >
-                        {/*<div className={style.cardTitle}>{JSON.stringify(card)}</div>*/}
-                        <div className={style.cardTitle}>{card.accion}</div>
-                        <div className={style.cardSubTitle} style={{color: "red"}}>{card.observacion}</div>
-                        {(card.estado == 'Observado') &&
-                            <>
-                                <Row gutter={16} align="middle" justify="center" style={{marginTop: '30px'}}>
-                                    <Input value={comment}  onChange={commentChange} placeholder="Comentario..." />
-                                </Row>
-                                <Row gutter={16} align="middle" justify="center" style={{marginTop: '30px'}}>
-                                    <Button icon={<DeleteOutlined />} size="large" style={{backgroundColor: '#044f9a', color: 'white', margin: '10px'}} onClick={() => { handleDeleted(card)  }}></Button>
-                                    {/*<Col className="gutter-row" span={8}>*/}
-                                    <Button icon={<CloseCircleOutlined />} size="large" style={{backgroundColor: '#d50000', color: 'white', margin: '10px'}} onClick={() => { handleDenied(card)  }}></Button>
-                                    {/*</Col>*/}
-                                    {/*<Col className="gutter-row" span={8}>*/}
-                                    <Button icon={<CheckCircleOutlined />}  size="large" style={{backgroundColor: '#005b10', color: 'white', margin: '10px'}} onClick={() => { handleApprove(card)  }}></Button>
-                                    {/*</Col>*/}
-                                </Row>
-                            </>}
-                    </Card>)
+            return (
+                <Card
+                    style={{width: 330, marginBottom: '20px', textAlign: 'center', borderRadius: '8px'}}
+                    cover={
+                    <a href={card.archivopresentado} target="_blank">
+                        <img
+                            alt="example"
+                            src="assets/pdf.jpg"
+                            style={{width: '40%', margin: '0 auto', transform: 'rotate(6deg)', paddingTop: '30px'}}
+                        />
+                    </a>
+                    }
+                >
+                    {/*<div className={style.cardTitle}>{JSON.stringify(card)}</div>*/}
+                    <div className={style.cardTitle}>{card.accion}</div>
+                    <div className={style.cardSubTitle} style={{color: "red"}}>{card.observacion}</div>
+                    {/*{(card.estado == 'Observado') &&*/}
+                    {/*    <>*/}
+                    {/*        <Row gutter={16} align="middle" justify="center" style={{marginTop: '30px'}}>*/}
+                    {/*            <Input value={comment}  onChange={commentChange} placeholder="Comentario..." />*/}
+                    {/*        </Row>*/}
+                    {/*        <Row gutter={16} align="middle" justify="center" style={{marginTop: '30px'}}>*/}
+                    {/*                <Button icon={<DeleteOutlined />} size="large" style={{backgroundColor: '#044f9a', color: 'white', margin: '10px'}} onClick={() => { handleDeleted(card)  }}></Button>*/}
+                    {/*            /!*<Col className="gutter-row" span={8}>*!/*/}
+                    {/*                <Button icon={<CloseCircleOutlined />} size="large" style={{backgroundColor: '#d50000', color: 'white', margin: '10px'}} onClick={() => { handleDenied(card)  }}></Button>*/}
+                    {/*            /!*</Col>*!/*/}
+                    {/*            /!*<Col className="gutter-row" span={8}>*!/*/}
+                    {/*                <Button icon={<CheckCircleOutlined />}  size="large" style={{backgroundColor: '#005b10', color: 'white', margin: '10px'}} onClick={() => { handleApprove(card)  }}></Button>*/}
+                    {/*            /!*</Col>*!/*/}
+                    {/*        </Row>*/}
+                    {/*    </>}*/}
+                </Card>)
             }
             else {
                 return (
@@ -843,21 +845,21 @@ function Component() {
                         {/*<div className={style.cardTitle}>{JSON.stringify(card)}</div>*/}
                         <div className={style.cardTitle} style={{outline: '1px solid #fefefe', padding: '10px', backgroundColor: '#FFA600FF', textAlign: 'left', fontSize: '12px', transform: 'rotate(-.3deg)', minHeight: '200px', color: 'black' }}>{card.accion}</div>
                         <div className={style.cardSubTitle} style={{color: "red"}}>{card.observacion}</div>
-                        {(card.estado == 'Observado') &&
-                            <>
-                                <Row gutter={16} align="middle" justify="center" style={{marginTop: '30px'}}>
-                                    <Input value={comment}  onChange={commentChange} placeholder="Comentario..." />
-                                </Row>
-                                <Row gutter={16} align="middle" justify="center" style={{marginTop: '30px'}}>
-                                    <Button icon={<DeleteOutlined />} size="large" style={{backgroundColor: '#044f9a', color: 'white', margin: '10px'}} onClick={() => { handleDeleted(card)  }}></Button>
-                                    {/*<Col className="gutter-row" span={8}>*/}
-                                    <Button icon={<CloseCircleOutlined />} size="large" style={{backgroundColor: '#d50000', color: 'white', margin: '10px'}} onClick={() => { handleDenied(card)  }}></Button>
-                                    {/*</Col>*/}
-                                    {/*<Col className="gutter-row" span={8}>*/}
-                                    <Button icon={<CheckCircleOutlined />}  size="large" style={{backgroundColor: '#005b10', color: 'white', margin: '10px'}} onClick={() => { handleApprove(card)  }}></Button>
-                                    {/*</Col>*/}
-                                </Row>
-                            </>}
+                        {/*{(card.estado == 'Observado') &&*/}
+                        {/*    <>*/}
+                        {/*        <Row gutter={16} align="middle" justify="center" style={{marginTop: '30px'}}>*/}
+                        {/*            <Input value={comment}  onChange={commentChange} placeholder="Comentario..." />*/}
+                        {/*        </Row>*/}
+                        {/*        <Row gutter={16} align="middle" justify="center" style={{marginTop: '30px'}}>*/}
+                        {/*            <Button icon={<DeleteOutlined />} size="large" style={{backgroundColor: '#044f9a', color: 'white', margin: '10px'}} onClick={() => { handleDeleted(card)  }}></Button>*/}
+                        {/*            /!*<Col className="gutter-row" span={8}>*!/*/}
+                        {/*            <Button icon={<CloseCircleOutlined />} size="large" style={{backgroundColor: '#d50000', color: 'white', margin: '10px'}} onClick={() => { handleDenied(card)  }}></Button>*/}
+                        {/*            /!*</Col>*!/*/}
+                        {/*            /!*<Col className="gutter-row" span={8}>*!/*/}
+                        {/*            <Button icon={<CheckCircleOutlined />}  size="large" style={{backgroundColor: '#005b10', color: 'white', margin: '10px'}} onClick={() => { handleApprove(card)  }}></Button>*/}
+                        {/*            /!*</Col>*!/*/}
+                        {/*        </Row>*/}
+                        {/*    </>}*/}
                     </Card>)
             }
         })
@@ -887,17 +889,20 @@ function Component() {
         }
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (values: any) => {
         try {
+
             console.log('handleSubmit')
             console.log(files[0])
             console.log('celldata')
             console.log(cellData)
+            console.log('values')
+            console.log(values)
 
             let form = new FormData()
             form.append('codigoapp', '40')
             form.append('tag', '2')
-            form.append('archivos', files[0].file)
+            form.append('archivos', (files[0] != undefined)? files[0].file : null)
             const response = await axios.post(import.meta.env.VITE_UPLOAD_URL, form, {
                 headers: {'Content-Type': 'multipart/form-data'}
             })
@@ -912,8 +917,8 @@ function Component() {
                     dato: {
                         idactividadperiodo: cellData.data['id' + year],
                         mes: meses[month],
-                        archivo: response.data[0].url,
-                        accion: files[0].name,
+                        archivo: (response.data[0] != undefined)? response.data[0].url : null,
+                        accion: values.comment || files[0].name,
                         idusuarioreg: "1"
                     }
                 })
@@ -945,10 +950,11 @@ function Component() {
             await readData()
         }
         catch (e) {
-
+            console.log(e)
         }
     }
 
+    console.log('DATA')
     console.log(data)
     let emptyItems = []
 
@@ -956,9 +962,14 @@ function Component() {
         console.log('xyz')
     }
 
+    console.log('APROBADOS')
+    let len = cellData?.cards?.filter((card: any) => card.estado == 'Aprobado').length
+
+
     const [form] = Form.useForm()
 
-    for (let i=0; i<1; i++) {
+    if (cellData?.cards?.filter((card: any) => card.estado == 'Aprobado').length != cellData?.text) {
+        //if  (true) {
         // @ts-ignore
         emptyItems.push(
             <Card
@@ -977,16 +988,16 @@ function Component() {
                         />
                     </Form.Item>
                     <Form.Item>
-                        <Form.Item name="dragger" valuePropName="file" noStyle>
-                            <Upload
-                                //accept={accept}
-                                customRequest={dummyRequest}
-                                fileList={[]}
-                            >
-                                <Button style={{width: '100%'}} icon={
-                                    <UploadOutlined/>}>{files.length ? files[0].name : 'Subir archivo...'}</Button>
-                            </Upload>
-                        </Form.Item>
+                    <Form.Item name="dragger" valuePropName="file" noStyle>
+                        <Upload
+                            //accept={accept}
+                            customRequest={dummyRequest}
+                            fileList={[]}
+                        >
+                            <Button style={{width: '100%'}} icon={
+                                <UploadOutlined/>}>{files.length ? files[0].name : 'Subir archivo...'}</Button>
+                        </Upload>
+                    </Form.Item>
                     </Form.Item>
                     <Form.Item>
                         <Button type="primary" htmlType="submit" block >ENVIAR</Button>
@@ -1010,11 +1021,13 @@ function Component() {
                 <Drawer placement="right" onClose={onClose} visible={visible} closeIcon={null}>
                     <div className={style.drawerTitle}>{cellData?.data?.nombre}</div>
                     <div className={style.drawerSubTitle}>{cellData?.title}</div>
+
                     {cards}
+                    {emptyItems}
                 </Drawer>
             </div>
             {loading && <div className={style.loader}>
-                <Spin indicator={antIcon} />
+                <Spin indicator={antIcon} />;
             </div>}
         </div>
     )
