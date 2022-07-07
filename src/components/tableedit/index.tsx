@@ -36,7 +36,7 @@ function Component(props: any) {
         Nombre: {
              title: 'Nombre', dataIndex: 'nombre', key: 'nombre', width: 650, render: (text: any, record: any) => {
                 return (
-                    <div style={{width: '650px'}}>
+                    <div className={style.nombre} style={{width: '650px'}}>
                         <div>{text.split(':')[0]}</div>
                         <div>{text.split(':')[1]}</div>
                     </div>)

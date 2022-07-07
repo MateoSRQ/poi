@@ -57,3 +57,19 @@
 .component :global(.ant-select) {
     margin-bottom: 10px !important;
 }
+
+:global(.ant-table-row-level-1) .nombre {
+    padding-left: 50px;
+}
+
+:global(.ant-table-row-level-2) .nombre {
+    padding-left: 100px;
+}
+
+:global(.ant-table-row-level-3) .nombre {
+    padding-left: 150px;
+}
+
+:global(.ant-table-row-level-4) .nombre {
+    padding-left: 200px;
+}
