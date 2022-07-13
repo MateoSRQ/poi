@@ -16,13 +16,16 @@ import Upload from "../upload";
 import Login from "../login";
 import provider from "../../components/authprovider"
 import {useStore} from '../../store';
+import {useEffect} from "react";
 
 function AuthProvider({children}: { children: React.ReactNode }) {
     let navigate = useNavigate();
     let username = useStore(state => state.username)
+    let start = useStore(state => state.start)
 
     console.log('AUTHPROVIDER')
-    console.log(username)
+    start()
+    console.log('username:' + username)
 
     let component: React.ReactNode = null;
 
